@@ -8,6 +8,7 @@ const Setting = {
   USER_NAME: 'Oliver.conner@gmail.com ',
   CITY: citiesList,
   IS_EMPTY: true,
+  IS_NEAR_PLACE: false,
 };
 
 ReactDOM.render(
@@ -17,6 +18,7 @@ ReactDOM.render(
       userName={Setting.USER_NAME}
       citiesList={Setting.CITY}
       isEmpty={Setting.IS_EMPTY}
+      isNearPlace={Setting.IS_NEAR_PLACE}
     />
   </React.StrictMode>,
   document.getElementById('root'));

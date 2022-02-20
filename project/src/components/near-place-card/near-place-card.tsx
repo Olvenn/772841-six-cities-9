@@ -2,23 +2,21 @@ import { Link } from 'react-router-dom';
 import { firstToUpperCase } from '../../utils';
 import { Offer } from '../../types/types';
 
-type OfferCardProps = {
+type NearPlaceCardProps = {
   oneOffer: Offer;
-  isNearPlace: boolean;
 }
 
-function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
+function NearPlaceCard(oneOffer: NearPlaceCardProps): JSX.Element {
 
-  const { id, isPremium, previewImage, price, rating, title, type } = oneOffer;
+  const { id, isPremium, previewImage, price, rating, title, type } = oneOffer.oneOffer;
 
   return (
     <>
-
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className={`${!isNearPlace ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/:${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place images" />
         </Link>
@@ -29,11 +27,11 @@ function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -51,6 +49,4 @@ function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
-
-
+export default NearPlaceCard;
