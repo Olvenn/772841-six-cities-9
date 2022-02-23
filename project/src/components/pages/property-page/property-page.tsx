@@ -1,12 +1,14 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import CommentCard from '../../comment-card/comment-card';
-import { comments, mokiOffer } from '../../../moki/moki';
+import { comments } from '../../../moki/moki';
 import CommentForm from '../../comment-form/comment-form';
 import { AuthorizationStatus } from '../../../const';
 import { shuffle, firstToUpperCase } from '../../../utils';
 import { offers } from '../../../moki/offers';
 import OfferCard from '../../offer-card/offer-card';
+import { useParams } from 'react-router-dom';
+import { Offer } from '../../../types/types';
 
 const IMSGES_COUNT = 6;
 const NEAR_COUNT = 3;
@@ -14,11 +16,20 @@ const NEAR_COUNT = 3;
 type PageHeaderProps = {
   userName: string;
   isNearPlace: boolean;
+  offersAll: Offer[];
 }
 
-function PropertyPage({ userName, isNearPlace }: PageHeaderProps): JSX.Element {
+function PropertyPage({ userName, isNearPlace, offersAll }: PageHeaderProps): JSX.Element {
+  const params = useParams();
+  // eslint-disable-next-line no-console
+  console.log(params.id);
 
-  const { bedrooms, description, goods, host, images, isPremium, maxAdults, price, rating, title, type } = mokiOffer;
+  const id = +(params.id ? params.id?.slice(1) : '');
+  const indese = offersAll.map((it) => it.id);
+  const idIndes = indese.indexOf(id);
+
+
+  const { bedrooms, description, goods, host, images, isPremium, maxAdults, price, rating, title, type } = offersAll[idIndes];
 
   return (
     <div className="page">
@@ -29,7 +40,7 @@ function PropertyPage({ userName, isNearPlace }: PageHeaderProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
 
-              {shuffle(images)?.slice(0, IMSGES_COUNT).map((image) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
+              {shuffle(images).slice(0, IMSGES_COUNT).map((image) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
 
             </div>
           </div>
@@ -123,7 +134,6 @@ function PropertyPage({ userName, isNearPlace }: PageHeaderProps): JSX.Element {
             <div className="near-places__list places__list">
 
               {offers.slice(0, NEAR_COUNT).map((offer) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={!isNearPlace} /></article>)}
-
 
             </div>
           </section>

@@ -1,3 +1,5 @@
+import { Offer } from '../types/types';
+
 export const comments = [
   {
     'id': 1,
@@ -52,7 +54,7 @@ export const comment =
   'date': '2022-01-13T12:59:09.591Z',
 };
 
-export const offer =
+export const mokiOffer =
 {
   'bedrooms': 3,
   'city': {
@@ -92,7 +94,7 @@ export const offer =
   'type': 'apartment',
 };
 
-export const mokiOffer =
+export const offer: Offer =
 {
   'city': {
     'name': 'Brussels',

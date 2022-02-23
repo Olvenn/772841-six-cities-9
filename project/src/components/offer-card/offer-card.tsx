@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { firstToUpperCase } from '../../utils';
 import { Offer } from '../../types/types';
 
+
 type OfferCardProps = {
   oneOffer: Offer;
   isNearPlace: boolean;
@@ -13,7 +14,6 @@ function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
 
   return (
     <>
-
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>

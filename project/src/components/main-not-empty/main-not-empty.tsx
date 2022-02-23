@@ -1,15 +1,27 @@
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
-import { offers } from '../../moki/offers';
+import { Offer, functionNumber } from '../../types/types';
+import { useState } from 'react';
 
 const ITEMS_COUNT = 5;
 
 type MainNotEmptyProps = {
   offerCount: number;
   isNearPlace: boolean;
+  offersAll: Offer[];
+  activeOffer: number;
 }
 
-function MainNotEmpty({ offerCount, isNearPlace }: MainNotEmptyProps): JSX.Element {
+function MainNotEmpty({ offerCount, isNearPlace, offersAll, activeOffer }: MainNotEmptyProps): JSX.Element {
+
+  const [offerActive, setActiveOffer] = useState(activeOffer);
+
+  const mouseOverActiveOfferHandler: functionNumber = (id) => {
+    setActiveOffer(id);
+    // eslint-disable-next-line no-console
+    console.log(offerActive);
+
+  };
 
   return (
     <div className="cities">
@@ -20,7 +32,7 @@ function MainNotEmpty({ offerCount, isNearPlace }: MainNotEmptyProps): JSX.Eleme
           <SortForm />
 
           <div className="cities__places-list places__list tabs__content">
-            {offers.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={isNearPlace} /></article>)}
+            {offersAll.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => mouseOverActiveOfferHandler(offer.id)} key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={isNearPlace} /></article>)}
           </div>
         </section>
         <div className="cities__right-section">

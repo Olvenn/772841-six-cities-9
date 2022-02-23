@@ -6,7 +6,8 @@ import LoginPage from '../pages/login-page/login-page';
 import PropertyPage from '../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { StringArray } from '../../types/types';
+import { StringArray, Offer } from '../../types/types';
+
 
 type AppProps = {
   offerCount: number;
@@ -14,15 +15,19 @@ type AppProps = {
   citiesList: StringArray;
   isEmpty: boolean;
   isNearPlace: boolean;
+  offer: Offer;
+  offersAll: Offer[];
+  activeOffer: number;
 }
 
-function App({ offerCount, userName, citiesList, isEmpty, isNearPlace }: AppProps): JSX.Element {
+function App({ offerCount, userName, citiesList, isEmpty, isNearPlace, offer, offersAll, activeOffer }: AppProps): JSX.Element {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offerCount={offerCount} userName={userName} citiesList={citiesList} isNearPlace={isNearPlace} />}
+          element={<MainPage offerCount={offerCount} userName={userName} citiesList={citiesList} isNearPlace={isNearPlace} offer={offer} offersAll={offersAll} activeOffer={activeOffer} />}
         />
         <Route
           path={AppRoute.Favorites}
@@ -37,8 +42,8 @@ function App({ offerCount, userName, citiesList, isEmpty, isNearPlace }: AppProp
           element={<LoginPage />}
         />
         <Route
-          path={AppRoute.Room}
-          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} />}
+          path={AppRoute.Property}
+          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offersAll={offersAll} />}
         />
         <Route
           path="*"
