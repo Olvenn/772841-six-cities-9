@@ -8,7 +8,7 @@ import { shuffle, firstToUpperCase } from '../../../utils';
 import { offers } from '../../../moki/offers';
 import OfferCard from '../../offer-card/offer-card';
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../../types/types';
+import { Offer, FunctionNumber } from '../../../types/types';
 
 const IMSGES_COUNT = 6;
 const NEAR_COUNT = 3;
@@ -17,18 +17,23 @@ type PageHeaderProps = {
   userName: string;
   isNearPlace: boolean;
   offersAll: Offer[];
+  favoritesId: number[];
+  handelFavoritesClick: FunctionNumber;
 }
 
-function PropertyPage({ userName, isNearPlace, offersAll }: PageHeaderProps): JSX.Element {
-  const params = useParams();
-  // eslint-disable-next-line no-console
-  console.log(params.id);
+function PropertyPage({ userName, isNearPlace, offersAll, favoritesId, handelFavoritesClick }: PageHeaderProps): JSX.Element {
 
+  //Проблема в закоментированном куске кода. Если им заменить строчки с 33 по 37. Код отрисовывается, но changedOffer - выдает ошибку, которую я не понимаю
+
+  // const params = useParams<{id: string}>();
+  // const id = params.id;
+  // const changedOffer : Offer = offersAll.find((offer) => String(offer.id) === id?.slice(1));
+  // const { bedrooms, description, goods, host, images, isPremium, maxAdults, price, rating, title, type } = changedOffer;
+
+  const params = useParams();
   const id = +(params.id ? params.id?.slice(1) : '');
   const indese = offersAll.map((it) => it.id);
   const idIndes = indese.indexOf(id);
-
-
   const { bedrooms, description, goods, host, images, isPremium, maxAdults, price, rating, title, type } = offersAll[idIndes];
 
   return (
@@ -39,9 +44,7 @@ function PropertyPage({ userName, isNearPlace, offersAll }: PageHeaderProps): JS
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-
               {shuffle(images).slice(0, IMSGES_COUNT).map((image) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
-
             </div>
           </div>
           <div className="property__container container">
@@ -133,7 +136,7 @@ function PropertyPage({ userName, isNearPlace, offersAll }: PageHeaderProps): JS
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {offers.slice(0, NEAR_COUNT).map((offer) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={!isNearPlace} /></article>)}
+              {offers.slice(0, NEAR_COUNT).map((offer) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={!isNearPlace}  favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
 
             </div>
           </section>

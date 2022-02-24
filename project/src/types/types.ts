@@ -1,5 +1,9 @@
-export interface functionNumber {
+export interface FunctionNumber {
   (item: number): void;
+}
+
+export interface FunctionArrayNumbers {
+  (item: number[]): void;
 }
 
 

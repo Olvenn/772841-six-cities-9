@@ -12,22 +12,25 @@ function CommentForm(): JSX.Element {
 
   };
   // eslint-disable-next-line no-console
-  console.log(rating);
+  // console.log(rating);
+  // Пока нет отправики на сервер
 
   const isProba = true;
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-      setComment('');
-      setRating('');
-    }}
+    <form className="reviews__form form" action="#" method="post"
+      onSubmit={(evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        setComment('');
+        setRating('');
+      }}
     >
 
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
       {isProba ?
         <div className="reviews__rating-form form__rating">
+
           <input onChange={handleRatingChange} checked={rating === '5'} value="5" className="form__rating-input visually-hidden" name="rating" data-stars="5" id="5-stars" type="radio" />
           <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
             <svg className="form__star-image" width="37" height="33">
@@ -79,7 +82,8 @@ function CommentForm(): JSX.Element {
 
         </div>}
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
-        placeholder="Tell how was your stay, what you like and what can be improved" value={comment} onChange={(evt) => { setComment(evt.target.value); }}
+        placeholder="Tell how was your stay, what you like and what can be improved" value={comment}
+        onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => { setComment(evt.target.value); }}
       >
       </textarea>
       <div className="reviews__button-wrapper">

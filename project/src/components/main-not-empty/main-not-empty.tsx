@@ -1,6 +1,6 @@
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
-import { Offer, functionNumber } from '../../types/types';
+import { Offer, FunctionNumber } from '../../types/types';
 import { useState } from 'react';
 
 const ITEMS_COUNT = 5;
@@ -10,17 +10,16 @@ type MainNotEmptyProps = {
   isNearPlace: boolean;
   offersAll: Offer[];
   activeOffer: number;
+  favoritesId: number[];
+  handelFavoritesClick: FunctionNumber;
 }
 
-function MainNotEmpty({ offerCount, isNearPlace, offersAll, activeOffer }: MainNotEmptyProps): JSX.Element {
+function MainNotEmpty({ offerCount, isNearPlace, offersAll, activeOffer, favoritesId, handelFavoritesClick  }: MainNotEmptyProps): JSX.Element {
 
   const [offerActive, setActiveOffer] = useState(activeOffer);
 
-  const mouseOverActiveOfferHandler: functionNumber = (id) => {
+  const mouseOverActiveOfferHandler: FunctionNumber = (id) => {
     setActiveOffer(id);
-    // eslint-disable-next-line no-console
-    console.log(offerActive);
-
   };
 
   return (
@@ -32,16 +31,15 @@ function MainNotEmpty({ offerCount, isNearPlace, offersAll, activeOffer }: MainN
           <SortForm />
 
           <div className="cities__places-list places__list tabs__content">
-            {offersAll.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => mouseOverActiveOfferHandler(offer.id)} key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={isNearPlace} /></article>)}
+            {offersAll.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => mouseOverActiveOfferHandler(offer.id)} key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <section className="cities__map map">{ offerActive }</section>
         </div>
       </div>
     </div>
   );
 }
-
 
 export default MainNotEmpty;

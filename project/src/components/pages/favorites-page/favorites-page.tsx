@@ -3,13 +3,16 @@ import PageFooter from '../../page-footer/page-footer';
 import FavoriteCard from '../../favorite-card/favorite-card';
 import { favorites } from '../../../moki/favorites';
 import { Link } from 'react-router-dom';
+import { FunctionNumber } from '../../../types/types';
 
 type FavoritesPageProps = {
   userName: string;
   isEmpty: boolean;
+  favoritesId: number[];
+  handelFavoritesClick: FunctionNumber;
 }
 
-function FavoritesPage({ userName, isEmpty }: FavoritesPageProps): JSX.Element {
+function FavoritesPage({ userName, isEmpty, favoritesId, handelFavoritesClick }: FavoritesPageProps): JSX.Element {
 
   const listVCities = new Set(favorites.map((favorite) => favorite.city.name));
 
@@ -38,7 +41,7 @@ function FavoritesPage({ userName, isEmpty }: FavoritesPageProps): JSX.Element {
                       </div>
                       <div className="favorites__places">
 
-                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={Math.random()}><FavoriteCard oneFavoriteOffer={favorite} /></article>)}
+                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={Math.random()}><FavoriteCard oneFavoriteOffer={favorite}  favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
 
                       </div>
                     </li>

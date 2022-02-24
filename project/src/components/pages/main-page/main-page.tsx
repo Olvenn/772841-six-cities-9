@@ -2,7 +2,7 @@ import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import MainNotEmptyProps from '../../main-not-empty/main-not-empty';
 import MainEmpty from '../../main-empty/main-empty';
-import { StringArray, Offer } from '../../../types/types';
+import { StringArray, Offer, FunctionNumber } from '../../../types/types';
 import { AuthorizationStatus } from '../../../const';
 import { Link } from 'react-router-dom';
 
@@ -14,16 +14,17 @@ type MainPageProps = {
   offer: Offer;
   offersAll: Offer[];
   activeOffer: number;
+  favoritesId: number[];
+  handelFavoritesClick: FunctionNumber;
 }
 
 const isOffers = true;
 
-function MainPage({ userName, citiesList, offerCount, isNearPlace, offer, offersAll, activeOffer }: MainPageProps): JSX.Element {
+function MainPage({ userName, citiesList, offerCount, isNearPlace, offer, offersAll, activeOffer, favoritesId, handelFavoritesClick }: MainPageProps): JSX.Element {
 
   return (
 
     <div className="page page--gray page--main">
-
 
       {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
 
@@ -45,7 +46,7 @@ function MainPage({ userName, citiesList, offerCount, isNearPlace, offer, offers
           </section>
         </div>
 
-        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offersAll={offersAll} activeOffer={activeOffer} /> : <MainEmpty />}
+        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offersAll={offersAll} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /> : <MainEmpty />}
 
       </main>
     </div>
