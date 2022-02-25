@@ -9,5 +9,4 @@ function PageFooter(): JSX.Element {
     </footer>
   );
 }
-
 export default PageFooter;

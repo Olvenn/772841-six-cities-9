@@ -1,17 +1,14 @@
 import { useState } from 'react';
-
 import { SortOptions } from '../../const';
 
 const optionActive = 'Popular';
 
 function SortForm(): JSX.Element {
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span onClick={() => {setIsOpen(!isOpen);}} className="places__sorting-type" tabIndex={0}>
+      <span onClick={() => { setIsOpen(!isOpen); }} className="places__sorting-type" tabIndex={0}>
         {optionActive}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
@@ -24,5 +21,4 @@ function SortForm(): JSX.Element {
     </form >
   );
 }
-
 export default SortForm;

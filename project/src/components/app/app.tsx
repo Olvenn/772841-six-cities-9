@@ -13,24 +13,22 @@ import { useState } from 'react';
 type AppProps = {
   offerCount: number;
   userName: string;
-  citiesList: StringArray;
+  cities: StringArray;
   isEmpty: boolean;
   isNearPlace: boolean;
   offer: Offer;
-  offersAll: Offer[];
+  offers: Offer[];
   activeOffer: number;
 }
 
-function App({ offerCount, userName, citiesList, isEmpty, isNearPlace, offer, offersAll, activeOffer }: AppProps): JSX.Element {
-
+function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers, activeOffer }: AppProps): JSX.Element {
   favorites.filter((oneOffer) => oneOffer.id === 1);
   const getFavoritesId = favorites.map((favorite) => favorite.id);
-
   const [favoritesId, setFavoritesId] = useState<number[]>(getFavoritesId);
 
   const handelFavoritesClick = (id: number): void => {
-    if(!getFavoritesId.includes(id)) {
-      const newOfferFavorite = offersAll.filter((newOffer)  => newOffer.id === id);
+    if (!getFavoritesId.includes(id)) {
+      const newOfferFavorite = offers.filter((newOffer) => newOffer.id === id);
       favorites.push(newOfferFavorite[0]);
       setFavoritesId([...favoritesId, id]);
     } else {
@@ -46,7 +44,7 @@ function App({ offerCount, userName, citiesList, isEmpty, isNearPlace, offer, of
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offerCount={offerCount} userName={userName} citiesList={citiesList} isNearPlace={isNearPlace} offer={offer} offersAll={offersAll} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
+          element={<MainPage offerCount={offerCount} userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
         />
         <Route
           path={AppRoute.Favorites}
@@ -62,7 +60,7 @@ function App({ offerCount, userName, citiesList, isEmpty, isNearPlace, offer, of
         />
         <Route
           path={AppRoute.Property}
-          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offersAll={offersAll} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
+          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
         />
         <Route
           path="*"
@@ -72,6 +70,4 @@ function App({ offerCount, userName, citiesList, isEmpty, isNearPlace, offer, of
     </BrowserRouter>
   );
 }
-
 export default App;
-

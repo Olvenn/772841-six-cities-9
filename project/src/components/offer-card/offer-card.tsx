@@ -10,10 +10,8 @@ type OfferCardProps = {
 }
 
 function OfferCard({ oneOffer, isNearPlace, favoritesId, handelFavoritesClick }: OfferCardProps): JSX.Element {
-
   const { id, isPremium, previewImage, price, rating, title, type } = oneOffer;
-
-  const isFavoriteStatus  = favoritesId.includes(id) ? 1 : 0;
+  const isFavoriteStatus = favoritesId.includes(id) ? 1 : 0;
 
   return (
     <>
@@ -53,6 +51,4 @@ function OfferCard({ oneOffer, isNearPlace, favoritesId, handelFavoritesClick }:
     </>
   );
 }
-
 export default OfferCard;
-

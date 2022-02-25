@@ -7,7 +7,7 @@ export enum SortOptions {
   Rated = 'Top rated first',
 }
 
-export const citiesList: StringArray = {
+export const cities: StringArray = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',

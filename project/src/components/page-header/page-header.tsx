@@ -34,6 +34,4 @@ function PageHeader({ userName }: PageHeaderProps): JSX.Element {
     </header>
   );
 }
-
 export default PageHeader;
-

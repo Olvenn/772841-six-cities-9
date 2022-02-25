@@ -4,14 +4,6 @@ import './not-found-page.css';
 function NotFoundPage(): JSX.Element {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-
-          </div>
-        </div>
-      </header>
-
       <main className="page__main">
         <section className="page__back">
           <div>
@@ -24,5 +16,4 @@ function NotFoundPage(): JSX.Element {
     </div>
   );
 }
-
 export default NotFoundPage;

@@ -10,8 +10,7 @@ type OfferCardProps = {
 
 function favoriteCard({ oneFavoriteOffer, favoritesId, handelFavoritesClick }: OfferCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, rating, title, type } = oneFavoriteOffer;
-
-  const isFavoriteStatus  = favoritesId.includes(id) ? 1 : 0;
+  const isFavoriteStatus = favoritesId.includes(id) ? 1 : 0;
 
   return (
     <article className="favorites__card place-card">
@@ -32,7 +31,7 @@ function favoriteCard({ oneFavoriteOffer, favoritesId, handelFavoritesClick }: O
           </div>
           <button onClick={() => handelFavoritesClick(id)} className={`place-card__bookmark-button button  ${isFavoriteStatus && 'place-card__bookmark-button--active'} `} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
+              <use xlinkHref="#icon-bookmark" />
             </svg>
             <span className="visually-hidden">In bookmarks</span>
           </button>
@@ -51,6 +50,4 @@ function favoriteCard({ oneFavoriteOffer, favoritesId, handelFavoritesClick }: O
     </article>
   );
 }
-
 export default favoriteCard;
-
