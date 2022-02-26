@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
 import { firstToUpperCase } from '../../utils';
-import { Offer } from '../../types/types';
+import { Offer, FunctionNumber } from '../../types/types';
 
 type OfferCardProps = {
   oneOffer: Offer;
   isNearPlace: boolean;
+  favoritesId: number[];
+  handelFavoritesClick: FunctionNumber;
 }
 
-function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
-
+function OfferCard({ oneOffer, isNearPlace, favoritesId, handelFavoritesClick }: OfferCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, rating, title, type } = oneOffer;
+  const isFavoriteStatus = favoritesId.includes(id) ? 1 : 0;
 
   return (
     <>
-
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -29,7 +30,7 @@ function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button onClick={() => handelFavoritesClick(id)} className={`place-card__bookmark-button button  ${isFavoriteStatus && 'place-card__bookmark-button--active'} `} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -50,7 +51,4 @@ function OfferCard({ oneOffer, isNearPlace }: OfferCardProps): JSX.Element {
     </>
   );
 }
-
 export default OfferCard;
-
-

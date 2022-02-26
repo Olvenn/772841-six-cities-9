@@ -25,6 +25,4 @@ function PageHeaderNoLogged(): JSX.Element {
     </header>
   );
 }
-
 export default PageHeaderNoLogged;
-

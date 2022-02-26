@@ -1,4 +1,6 @@
-export const offers = [
+import { Offer } from '../types/types';
+
+export const offers : Offer[] = [
   {
     'city': {
       'name': 'Brussels',
@@ -26,7 +28,7 @@ export const offers = [
       'https://9.react.pages.academy/static/hotel/15.jpg',
     ],
     'title': 'The Pondhouse - A Magical Place',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 4.8,
     'type': 'house',
@@ -83,7 +85,7 @@ export const offers = [
       'https://9.react.pages.academy/static/hotel/11.jpg',
     ],
     'title': 'Loft Studio in the Central Area',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 2.4,
     'type': 'hotel',
@@ -136,7 +138,7 @@ export const offers = [
       'https://9.react.pages.academy/static/hotel/2.jpg',
     ],
     'title': 'Waterfront with extraordinary view',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 4.8,
     'type': 'room',
@@ -489,7 +491,7 @@ export const offers = [
       'https://9.react.pages.academy/static/hotel/8.jpg',
     ],
     'title': 'The Pondhouse - A Magical Place',
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 3.1,
     'type': 'room',

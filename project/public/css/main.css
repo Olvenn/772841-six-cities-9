@@ -1981,4 +1981,17 @@ img {
   opacity: .5
 }
 
+.page__back {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: ceter;
+  -ms-flex-align: ceter;
+  align-items: center;
+  height: 90vh;
+}
 /*# sourceMappingURL=main.css.map */

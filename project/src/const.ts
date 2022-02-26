@@ -7,7 +7,7 @@ export enum SortOptions {
   Rated = 'Top rated first',
 }
 
-export const citiesList: StringArray = {
+export const cities: StringArray = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -16,7 +16,7 @@ export const citiesList: StringArray = {
   Dusseldorf: 'Dusseldorf',
 };
 
-export const rating: { id: string, name: string }[] = [
+export const ratingName: { id: string, name: string }[] = [
   { 'id': '5-stars', 'name': 'perfect' },
   { 'id': '4-stars', 'name': 'good' },
   { 'id': '3-stars', 'name': 'not bad' },
@@ -27,7 +27,7 @@ export const rating: { id: string, name: string }[] = [
 export enum AppRoute {
   Root = '/',
   Login = '/login',
-  Room = '/offer/:id',
+  Property = '/offer/:id',
   Favorites = '/favorites',
 }
 
