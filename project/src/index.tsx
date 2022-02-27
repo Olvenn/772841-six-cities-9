@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { cities } from './const';
-import { offer } from './moki/moki';
-import { offers } from './moki/offers';
+import { offer } from './mock/mock';
+import { offers } from './mock/offers';
 
 const Setting = {
   OFFER_COUNT: 312,

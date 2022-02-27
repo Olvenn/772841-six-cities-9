@@ -54,7 +54,7 @@ export const comment =
   'date': '2022-01-13T12:59:09.591Z',
 };
 
-export const mokiOffer =
+export const mockOffer =
 {
   'bedrooms': 3,
   'city': {

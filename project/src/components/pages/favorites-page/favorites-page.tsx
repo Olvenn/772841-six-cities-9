@@ -1,7 +1,7 @@
 import PageHeader from '../../page-header/page-header';
 import PageFooter from '../../page-footer/page-footer';
 import FavoriteCard from '../../favorite-card/favorite-card';
-import { favorites } from '../../../moki/favorites';
+import { favorites } from '../../../mock/favorites';
 import { Link } from 'react-router-dom';
 import { FunctionNumber } from '../../../types/types';
 
@@ -9,23 +9,18 @@ type FavoritesPageProps = {
   userName: string;
   isEmpty: boolean;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function FavoritesPage({ userName, isEmpty, favoritesId, handelFavoritesClick }: FavoritesPageProps): JSX.Element {
-
+function FavoritesPage({ userName, isEmpty, favoritesId, onFavoriteClick }: FavoritesPageProps): JSX.Element {
   const listVCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (
-
     <div className="page">
       <PageHeader userName={userName} />
-
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-
           {isEmpty ? (
-
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
@@ -40,9 +35,7 @@ function FavoritesPage({ userName, isEmpty, favoritesId, handelFavoritesClick }:
                         </div>
                       </div>
                       <div className="favorites__places">
-
-                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={Math.random()}><FavoriteCard oneFavoriteOffer={favorite}  favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
-
+                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={favorite.id}><FavoriteCard oneFavoriteOffer={favorite} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
                       </div>
                     </li>
                   ),
@@ -50,9 +43,7 @@ function FavoritesPage({ userName, isEmpty, favoritesId, handelFavoritesClick }:
                 }
               </ul>
             </section>
-
           ) : (
-
             <section className="favorites favorites--empty">
               <h1 className="visually-hidden">Favorites (empty)</h1>
               <div className="favorites__status-wrapper">
@@ -60,14 +51,11 @@ function FavoritesPage({ userName, isEmpty, favoritesId, handelFavoritesClick }:
                 <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
               </div>
             </section>
-
           )}
-
         </div>
       </main>
       <PageFooter />
     </div>
   );
 }
-
 export default FavoritesPage;

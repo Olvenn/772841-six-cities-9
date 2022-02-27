@@ -17,8 +17,7 @@ function PageHeader({ userName }: PageHeaderProps): JSX.Element {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
+                  <div className="header__avatar-wrapper user__avatar-wrapper" />
                   <span className="header__user-name user__name">{userName}</span>
                 </Link>
               </li>

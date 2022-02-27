@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from 'react';
-import { ratingName } from '../../const';
+import { ratings } from '../../const';
 
 function CommentForm(): JSX.Element {
   const [rating, setRating] = useState('');
@@ -8,31 +8,27 @@ function CommentForm(): JSX.Element {
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(evt.target.value);
   };
-  // eslint-disable-next-line no-console
-  // console.log(rating);
-  // Пока нет отправики на сервер
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    setComment('');
+    setRating('');
+  };
+  const handleTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(evt.target.value);
+  };
+
   return (
     <form className="reviews__form form" action="#" method="post"
-      onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
-        setComment('');
-        setRating('');
-      }}
+      onSubmit={handleFormSubmit}
     >
-      <input onChange={handleRatingChange} checked={rating === '5'} value="5" className="form__rating-input visually-hidden" name="rating" data-stars="5" id="5-stars" type="radio" />
-      <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {ratingName.map((title, index) => (
+        {ratings.map((title, index) => (
           <React.Fragment key={title.id} >
             <input onChange={handleRatingChange} checked={+rating === (5 - index)} className="form__rating-input visually-hidden" name="rating" value={5 - index} id={title.id} type="radio" />
             <label htmlFor={title.id} className="reviews__rating-label form__rating-label" title={title.name}>
               <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
+                <use xlinkHref="#icon-star" />
               </svg>
             </label>
           </React.Fragment>
@@ -40,7 +36,7 @@ function CommentForm(): JSX.Element {
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved" value={comment}
-        onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => { setComment(evt.target.value); }}
+        onChange={handleTextChange}
       >
       </textarea>
       <div className="reviews__button-wrapper">

@@ -11,14 +11,17 @@ type MainNotEmptyProps = {
   offers: Offer[];
   activeOffer: number;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function MainNotEmpty({ offerCount, isNearPlace, offers, activeOffer, favoritesId, handelFavoritesClick }: MainNotEmptyProps): JSX.Element {
+function MainNotEmpty({ offerCount, isNearPlace, offers, activeOffer, favoritesId, onFavoriteClick }: MainNotEmptyProps): JSX.Element {
   const [offerActive, setActiveOffer] = useState(activeOffer);
   const mouseOverActiveOfferHandler: FunctionNumber = (id) => {
     setActiveOffer(id);
   };
+
+  //Не получилось заменить
+  // const handleMouseOver = () => (idOffer: number) => mouseOverActiveOfferHandler(idOffer);
 
   return (
     <div className="cities">
@@ -28,7 +31,7 @@ function MainNotEmpty({ offerCount, isNearPlace, offers, activeOffer, favoritesI
           <b className="places__found"> {offerCount} places to stay in Amsterdam</b>
           <SortForm />
           <div className="cities__places-list places__list tabs__content">
-            {offers.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => mouseOverActiveOfferHandler(offer.id)} key={Math.random()}><OfferCard oneOffer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
+            {offers.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => mouseOverActiveOfferHandler(offer.id)} key={Math.random()}><OfferCard offer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
           </div>
         </section>
         <div className="cities__right-section">

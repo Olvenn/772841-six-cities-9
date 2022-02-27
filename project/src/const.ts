@@ -16,7 +16,7 @@ export const cities: StringArray = {
   Dusseldorf: 'Dusseldorf',
 };
 
-export const ratingName: { id: string, name: string }[] = [
+export const ratings: { id: string, name: string }[] = [
   { 'id': '5-stars', 'name': 'perfect' },
   { 'id': '4-stars', 'name': 'good' },
   { 'id': '3-stars', 'name': 'not bad' },

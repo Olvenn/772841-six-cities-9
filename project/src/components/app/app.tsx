@@ -7,7 +7,7 @@ import PropertyPage from '../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { StringArray, Offer } from '../../types/types';
-import { favorites } from '../../moki/favorites';
+import { favorites } from '../../mock/favorites';
 import { useState } from 'react';
 
 type AppProps = {
@@ -22,20 +22,20 @@ type AppProps = {
 }
 
 function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers, activeOffer }: AppProps): JSX.Element {
-  favorites.filter((oneOffer) => oneOffer.id === 1);
+  favorites.filter((offer) => offer.id === 1);
   const getFavoritesId = favorites.map((favorite) => favorite.id);
   const [favoritesId, setFavoritesId] = useState<number[]>(getFavoritesId);
 
-  const handelFavoritesClick = (id: number): void => {
+  const onFavoriteClick = (id: number): void => {
     if (!getFavoritesId.includes(id)) {
       const newOfferFavorite = offers.filter((newOffer) => newOffer.id === id);
       favorites.push(newOfferFavorite[0]);
       setFavoritesId([...favoritesId, id]);
     } else {
-      setFavoritesId(favoritesId.filter((oneOffer) => oneOffer !== id));
-      const index = favorites.findIndex((oneOffer) => oneOffer.id === id);
+      setFavoritesId(favoritesId.filter((offer) => offer !== id));
+      const index = favorites.findIndex((offer) => offer.id === id);
       favorites.splice(index, 1);
-      favorites.filter((oneOffer) => oneOffer.id !== id);
+      favorites.filter((offer) => offer.id !== id);
     }
   };
 
@@ -44,13 +44,13 @@ function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offerCount={offerCount} userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
+          element={<MainPage offerCount={offerCount} userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} />}
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesPage userName={userName} isEmpty={isEmpty} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />
+              <FavoritesPage userName={userName} isEmpty={isEmpty} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} />
             </PrivateRoute>
           }
         />
@@ -60,7 +60,7 @@ function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers
         />
         <Route
           path={AppRoute.Property}
-          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} />}
+          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} />}
         />
         <Route
           path="*"

@@ -1,7 +1,7 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import CommentCard from '../../comment-card/comment-card';
-import { comments } from '../../../moki/moki';
+import { comments } from '../../../mock/mock';
 import CommentForm from '../../comment-form/comment-form';
 import { AuthorizationStatus } from '../../../const';
 import { shuffle, firstToUpperCase } from '../../../utils';
@@ -17,12 +17,12 @@ type PageHeaderProps = {
   isNearPlace: boolean;
   offers: Offer[];
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function PropertyPage({ userName, isNearPlace, offers, favoritesId, handelFavoritesClick }: PageHeaderProps): JSX.Element {
+function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteClick }: PageHeaderProps): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const offer: Offer | undefined = offers.find((item) => String(item.id) === id?.slice(1));
+  const offer = offers.find((item) => String(item.id) === id?.slice(1));
   if (!offer) {
     return <div>Not found</div>;
   }
@@ -119,7 +119,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, handelFavori
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {offers.slice(0, NEAR_COUNT).map((item) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={item} isNearPlace={!isNearPlace} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
+              {offers.slice(0, NEAR_COUNT).map((item) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard offer={item} isNearPlace={!isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
             </div>
           </section>
         </div>

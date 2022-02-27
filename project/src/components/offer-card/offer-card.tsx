@@ -3,34 +3,32 @@ import { firstToUpperCase } from '../../utils';
 import { Offer, FunctionNumber } from '../../types/types';
 
 type OfferCardProps = {
-  oneOffer: Offer;
+  offer: Offer;
   isNearPlace: boolean;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function OfferCard({ oneOffer, isNearPlace, favoritesId, handelFavoritesClick }: OfferCardProps): JSX.Element {
-  const { id, isPremium, previewImage, price, rating, title, type } = oneOffer;
-  const isFavoriteStatus = favoritesId.includes(id) ? 1 : 0;
-
+function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick }: OfferCardProps): JSX.Element {
+  //Не получилось вынести onClick={() => onFavoriteClick(offer.id)}
   return (
     <>
-      {isPremium &&
+      {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
       <div className={`${!isNearPlace ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
-        <Link to={`/offer/:${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place images" />
+        <Link to={`/offer/:${offer.id}`}>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place images" />
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button onClick={() => handelFavoritesClick(id)} className={`place-card__bookmark-button button  ${isFavoriteStatus && 'place-card__bookmark-button--active'} `} type="button">
+          <button onClick={() => onFavoriteClick(offer.id)} className={`place-card__bookmark-button button  ${favoritesId.includes(offer.id) && 'place-card__bookmark-button--active'} `} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -39,14 +37,14 @@ function OfferCard({ oneOffer, isNearPlace, favoritesId, handelFavoritesClick }:
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }}></span>
+            <span style={{ width: `${offer.rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${id}`}>{title}</Link>
+          <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{firstToUpperCase(type)}</p>
+        <p className="place-card__type">{firstToUpperCase(offer.type)}</p>
       </div>
     </>
   );

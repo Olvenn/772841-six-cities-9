@@ -91,7 +91,7 @@ export type AllOffers = {
   offers: Offer[];
 }
 
-export const offersMoki: Offer[] = [
+export const offersmock: Offer[] = [
   {
     'city': {
       'name': 'Brussels',

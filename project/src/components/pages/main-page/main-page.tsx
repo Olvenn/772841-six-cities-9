@@ -15,12 +15,12 @@ type MainPageProps = {
   offers: Offer[];
   activeOffer: number;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
 const isOffers = true;
 
-function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, handelFavoritesClick }: MainPageProps): JSX.Element {
+function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
@@ -39,7 +39,7 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
             </ul>
           </section>
         </div>
-        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /> : <MainEmpty />}
+        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /> : <MainEmpty />}
       </main>
     </div>
   );
