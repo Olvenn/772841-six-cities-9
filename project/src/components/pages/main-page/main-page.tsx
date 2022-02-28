@@ -1,10 +1,11 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
-import MainNotEmptyProps from '../../main-not-empty/main-not-empty';
+import Main from '../../main/main';
 import MainEmpty from '../../main-empty/main-empty';
 import { StringArray, Offer, FunctionNumber } from '../../../types/types';
 import { AuthorizationStatus } from '../../../const';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 type MainPageProps = {
   offerCount: number;
@@ -21,6 +22,16 @@ type MainPageProps = {
 const isOffers = true;
 
 function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
+  const [cityActive, setActiveCity] = useState('Paris');
+
+  //как правильно
+  const handleCityClick = (evt: React.MouseEvent<HTMLLIElement>) => {
+    // eslint-disable-next-line no-console
+    console.log('city', evt.target.closest('span').innerText);
+
+    setActiveCity(evt.target.closest('span').innerText);
+  };
+
   return (
     <div className="page page--gray page--main">
       {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
@@ -30,8 +41,8 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {(Object.entries(cities)).map(([key, city]) => (
-                <li key={key} className="locations__item">
-                  <Link className={city === 'Amsterdam' ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} to='/'>
+                <li key={key} onClick={handleCityClick} className="locations__item">
+                  <Link className={city === cityActive ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} to='/'>
                     <span>{key}</span>
                   </Link>
                 </li>
@@ -39,7 +50,7 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
             </ul>
           </section>
         </div>
-        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /> : <MainEmpty />}
+        {isOffers ? <Main offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} cityActive={cityActive} /> : <MainEmpty />}
       </main>
     </div>
   );

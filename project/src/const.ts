@@ -1,4 +1,6 @@
-import { StringArray } from './types/types';
+import { StringArray, City } from './types/types';
+
+export const ZOOM = 12;
 
 export enum SortOptions {
   Popular = 'Popular',
@@ -15,6 +17,60 @@ export const cities: StringArray = {
   Hamburg: 'Hamburg',
   Dusseldorf: 'Dusseldorf',
 };
+
+export const URL_MARKER_ACTIVE = '/img/pin-active.svg';
+export const URL_MARKER = '/img/pin.svg';
+
+export const CITIES: City[] = [
+  {
+    location: {
+      latitude: 48.8534100,
+      longitude: 2.3488000,
+      zoom: ZOOM,
+    },
+    name: 'Paris',
+  },
+  {
+    location: {
+      latitude: 50.9333300,
+      longitude: 6.9500000,
+      zoom: ZOOM,
+    },
+    name: 'Cologne',
+  },
+  {
+    location: {
+      latitude: 50.8504500,
+      longitude: 4.3487800,
+      zoom: ZOOM,
+    },
+    name: 'Brussels',
+  },
+  {
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: ZOOM,
+    },
+    name: 'Amsterdam',
+  },
+  {
+    location: {
+      latitude: 53.5753200,
+      longitude: 10.0153400,
+      zoom: ZOOM,
+    },
+    name: 'Hamburg',
+  },
+  {
+    location: {
+      latitude: 51.2217200,
+      longitude: 6.7761600,
+      zoom: ZOOM,
+    },
+    name: 'Dusseldorf',
+  },
+];
 
 export const ratings: { id: string, name: string }[] = [
   { 'id': '5-stars', 'name': 'perfect' },
