@@ -13,13 +13,11 @@ export type MapProps = {
 function Map({ city, offers, offerActive }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
   const offerIcon = leaflet.icon({
     iconUrl: URL_MARKER,
     iconSize: [27, 39],
     iconAnchor: [13.5, 20],
   });
-
   const offerActiveIcon = leaflet.icon({
     iconUrl: URL_MARKER_ACTIVE,
     iconSize: [27, 39],

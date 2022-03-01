@@ -26,6 +26,9 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
   if (!offer) {
     return <div>Not found</div>;
   }
+  //Проблема! Я переиспользую OfferCard. На главной странице есть mouseOver, а на property нет.
+  //Пока сделала функцию-заглушку. Как быть в таком случае?
+  //Так же в favorites-page, хотела переиспользовать
   const handleOfferMouseOver: FunctionNumber = (offerId) => {
     // eslint-disable-next-line no-console
     console.log(offerId);
@@ -123,7 +126,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="cities__places-list places__list tabs__content">
-              {offers.slice(0, NEAR_COUNT).map((offerNearby) => ( <OfferCard offer={offerNearby} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} /> ))}
+              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} />))}
             </div>
           </section>
         </div>

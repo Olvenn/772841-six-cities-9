@@ -8,10 +8,8 @@ type OfferCardProps = {
   onFavoriteClick: FunctionNumber;
 }
 
-
 function favoriteCard({ oneFavoriteOffer, favoritesId, onFavoriteClick }: OfferCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, rating, title, type } = oneFavoriteOffer;
-
   const handelFavoriteClick = () => onFavoriteClick(id);
 
   return (

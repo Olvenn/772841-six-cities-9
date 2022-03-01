@@ -20,8 +20,6 @@ type MainProps = {
 function Main({ offerCount, isNearPlace, offers, activeOffer, favoritesId, onFavoriteClick, cityActive }: MainProps): JSX.Element {
   const [offerActive, setActiveOffer] = useState(activeOffer);
   const handleOfferMouseOver: FunctionNumber = (offerId) => {
-    // eslint-disable-next-line no-console
-    console.log(offerId);
     setActiveOffer(offerId);
   };
   const cityOne = CITIES.find((item) => item.name === cityActive);
@@ -37,7 +35,7 @@ function Main({ offerCount, isNearPlace, offers, activeOffer, favoritesId, onFav
           <b className="places__found"> {offerCount} places to stay in Amsterdam</b>
           <SortForm />
           <div className="cities__places-list places__list tabs__content">
-            {offers.slice(0, ITEMS_COUNT).map((offer) => ( <OfferCard offer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offer.id} /> ))}
+            {offers.slice(0, ITEMS_COUNT).map((offer) => (<OfferCard offer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
           </div>
         </section>
         <section className="visually-hidden cities__map map">{offerActive}</section>

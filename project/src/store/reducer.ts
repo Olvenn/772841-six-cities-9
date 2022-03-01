@@ -1,11 +1,10 @@
-import {createReducer} from '@reduxjs/toolkit';
-import {changeCity} from './action';
-import {FIRST_TOWN} from '../const';
+import { createReducer } from '@reduxjs/toolkit';
+import { changeCity } from './action';
+import { FIRST_TOWN } from '../const';
 
 const initialState = {
   town: FIRST_TOWN,
 };
-
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state) => {
@@ -13,4 +12,4 @@ const reducer = createReducer(initialState, (builder) => {
     });
 });
 
-export {reducer};
+export { reducer };

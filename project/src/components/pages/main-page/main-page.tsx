@@ -24,8 +24,6 @@ const isOffers = true;
 function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
   const [cityActive, setActiveCity] = useState(FIRST_TOWN);
   const handleCityClick: FunctionString = (city: string) => {
-    // eslint-disable-next-line no-console
-    console.log('a', city);
     setActiveCity(city);
   };
 
