@@ -41,7 +41,7 @@ function Map({ city, offers, offerActive }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, offerActive, offerActiveIcon, offerIcon]);
 
   return (
     <section className="cities__map map" ref={mapRef}></section>

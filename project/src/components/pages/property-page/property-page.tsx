@@ -26,6 +26,10 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
   if (!offer) {
     return <div>Not found</div>;
   }
+  const handleOfferMouseOver: FunctionNumber = (offerId) => {
+    // eslint-disable-next-line no-console
+    console.log(offerId);
+  };
 
   return (
     <div className="page">
@@ -34,7 +38,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {shuffle(offer.images).slice(0, IMAGES_COUNT).map((image) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
+              {shuffle(offer.images).slice(0, IMAGES_COUNT).map((image: string) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
             </div>
           </div>
           <div className="property__container container">
@@ -118,8 +122,8 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {offers.slice(0, NEAR_COUNT).map((item) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard offer={item} isNearPlace={!isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
+            <div className="cities__places-list places__list tabs__content">
+              {offers.slice(0, NEAR_COUNT).map((offerNearby) => ( <OfferCard offer={offerNearby} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} /> ))}
             </div>
           </section>
         </div>

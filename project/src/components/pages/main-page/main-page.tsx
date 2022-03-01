@@ -2,10 +2,10 @@ import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import Main from '../../main/main';
 import MainEmpty from '../../main-empty/main-empty';
-import { StringArray, Offer, FunctionNumber } from '../../../types/types';
-import { AuthorizationStatus } from '../../../const';
-import { Link } from 'react-router-dom';
+import { StringArray, Offer, FunctionNumber, FunctionString } from '../../../types/types';
+import { AuthorizationStatus, FIRST_TOWN } from '../../../const';
 import { useState } from 'react';
+import CitiesList from '../../cities-list/cities-list';
 
 type MainPageProps = {
   offerCount: number;
@@ -22,14 +22,11 @@ type MainPageProps = {
 const isOffers = true;
 
 function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
-  const [cityActive, setActiveCity] = useState('Paris');
-
-  //как правильно
-  const handleCityClick = (evt: React.MouseEvent<HTMLLIElement>) => {
+  const [cityActive, setActiveCity] = useState(FIRST_TOWN);
+  const handleCityClick: FunctionString = (city: string) => {
     // eslint-disable-next-line no-console
-    console.log('city', evt.target.closest('span').innerText);
-
-    setActiveCity(evt.target.closest('span').innerText);
+    console.log('a', city);
+    setActiveCity(city);
   };
 
   return (
@@ -41,11 +38,12 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {(Object.entries(cities)).map(([key, city]) => (
-                <li key={key} onClick={handleCityClick} className="locations__item">
-                  <Link className={city === cityActive ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} to='/'>
-                    <span>{key}</span>
-                  </Link>
-                </li>
+                <CitiesList
+                  key={key}
+                  city={city}
+                  onClick={handleCityClick}
+                  cityActive={cityActive}
+                />
               ))}
             </ul>
           </section>

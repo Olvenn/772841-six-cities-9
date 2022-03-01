@@ -1,14 +1,14 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useState } from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { StringArray, Offer } from '../../types/types';
 import MainPage from '../pages/main-page/main-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import PropertyPage from '../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { StringArray, Offer } from '../../types/types';
 import { favorites } from '../../mock/favorites';
-import { useState } from 'react';
 
 type AppProps = {
   offerCount: number;
@@ -22,7 +22,7 @@ type AppProps = {
 }
 
 function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers, activeOffer }: AppProps): JSX.Element {
-  favorites.filter((offer) => offer.id === 1);
+  favorites.filter((favorite) => favorite.id === 1);
   const getFavoritesId = favorites.map((favorite) => favorite.id);
   const [favoritesId, setFavoritesId] = useState<number[]>(getFavoritesId);
 
@@ -32,10 +32,10 @@ function App({ offerCount, userName, cities, isEmpty, isNearPlace, offer, offers
       favorites.push(newOfferFavorite[0]);
       setFavoritesId([...favoritesId, id]);
     } else {
-      setFavoritesId(favoritesId.filter((offer) => offer !== id));
-      const index = favorites.findIndex((offer) => offer.id === id);
+      setFavoritesId(favoritesId.filter((favorite) => favorite !== id));
+      const index = favorites.findIndex((favorite) => favorite.id === id);
       favorites.splice(index, 1);
-      favorites.filter((offer) => offer.id !== id);
+      favorites.filter((favorite) => favorite.id !== id);
     }
   };
 

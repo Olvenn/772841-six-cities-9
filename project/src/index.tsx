@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './components/app/app';
 import { cities } from './const';
 import { offer } from './mock/mock';
@@ -19,15 +21,17 @@ console.log(offers);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      offerCount={Setting.OFFER_COUNT}
-      userName={Setting.USER_NAME}
-      cities={Setting.CITY}
-      isEmpty={Setting.IS_EMPTY}
-      isNearPlace={Setting.IS_NEAR_PLACE}
-      offer={offer}
-      offers={offers}
-      activeOffer={Setting.ACTIVE_OFFER}
-    />
+    <Provider store={store}>
+      <App
+        offerCount={Setting.OFFER_COUNT}
+        userName={Setting.USER_NAME}
+        cities={Setting.CITY}
+        isEmpty={Setting.IS_EMPTY}
+        isNearPlace={Setting.IS_NEAR_PLACE}
+        offer={offer}
+        offers={offers}
+        activeOffer={Setting.ACTIVE_OFFER}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

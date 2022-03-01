@@ -6,6 +6,9 @@ export interface FunctionArrayNumbers {
   (item: number[]): void;
 }
 
+export interface FunctionString {
+  (item: string): void;
+}
 
 export interface StringArray {
   [index: string]: string;

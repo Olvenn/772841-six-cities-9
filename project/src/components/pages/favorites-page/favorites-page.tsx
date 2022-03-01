@@ -26,7 +26,7 @@ function FavoritesPage({ userName, isEmpty, favoritesId, onFavoriteClick }: Favo
               <ul className="favorites__list">
                 {
                   [...listVCities].map((favoriteCity: string) => (
-                    <li key={Math.random()} className="favorites__locations-items">
+                    <li key={favoriteCity} className="favorites__locations-items">
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
                           <Link className="locations__item-link" to="/">

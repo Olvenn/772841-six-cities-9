@@ -19,22 +19,15 @@ type MainProps = {
 
 function Main({ offerCount, isNearPlace, offers, activeOffer, favoritesId, onFavoriteClick, cityActive }: MainProps): JSX.Element {
   const [offerActive, setActiveOffer] = useState(activeOffer);
-  // const [cityActive, setActiveCity] = useState('Paris');
-
-
-  const onActiveOfferMouseOver: FunctionNumber = (id) => {
+  const handleOfferMouseOver: FunctionNumber = (offerId) => {
     // eslint-disable-next-line no-console
-    console.log(id);
-    setActiveOffer(id);
+    console.log(offerId);
+    setActiveOffer(offerId);
   };
-
   const cityOne = CITIES.find((item) => item.name === cityActive);
   if (!cityOne) {
     return <div>No city</div>;
   }
-
-  //Не получилось заменить
-  // const handleMouseOver = () => (idOffer: number) => mouseOverActiveOfferHandler(idOffer);
 
   return (
     <div className="cities">
@@ -44,15 +37,15 @@ function Main({ offerCount, isNearPlace, offers, activeOffer, favoritesId, onFav
           <b className="places__found"> {offerCount} places to stay in Amsterdam</b>
           <SortForm />
           <div className="cities__places-list places__list tabs__content">
-            {offers.slice(0, ITEMS_COUNT).map((offer) => <article className="cities__place-card place-card" onMouseOver={() => onActiveOfferMouseOver(offer.id)} key={Math.random()}><OfferCard offer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
+            {offers.slice(0, ITEMS_COUNT).map((offer) => ( <OfferCard offer={offer} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offer.id} /> ))}
           </div>
         </section>
         <section className="visually-hidden cities__map map">{offerActive}</section>
         <div className="cities__right-section">
           <Map city={cityOne} offers={offers} offerActive={offerActive} />
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 export default Main;

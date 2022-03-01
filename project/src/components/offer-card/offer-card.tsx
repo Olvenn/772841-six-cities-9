@@ -7,12 +7,16 @@ type OfferCardProps = {
   isNearPlace: boolean;
   favoritesId: number[];
   onFavoriteClick: FunctionNumber;
+  onOfferMouseOver: FunctionNumber;
 }
 
-function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick }: OfferCardProps): JSX.Element {
-  //Не получилось вынести onClick={() => onFavoriteClick(offer.id)}
+function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick, onOfferMouseOver }: OfferCardProps): JSX.Element {
+  const handleMouseOver = () => {
+    onOfferMouseOver(offer.id);
+  };
+
   return (
-    <>
+    <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -46,7 +50,7 @@ function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick }: OfferCa
         </h2>
         <p className="place-card__type">{firstToUpperCase(offer.type)}</p>
       </div>
-    </>
+    </article>
   );
 }
 export default OfferCard;
