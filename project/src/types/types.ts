@@ -6,6 +6,9 @@ export interface FunctionArrayNumbers {
   (item: number[]): void;
 }
 
+export interface FunctionString {
+  (item: string): void;
+}
 
 export interface StringArray {
   [index: string]: string;
@@ -91,7 +94,7 @@ export type AllOffers = {
   offers: Offer[];
 }
 
-export const offersMoki: Offer[] = [
+export const offersmock: Offer[] = [
   {
     'city': {
       'name': 'Brussels',

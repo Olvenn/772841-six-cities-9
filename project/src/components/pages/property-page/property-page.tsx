@@ -1,7 +1,7 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import CommentCard from '../../comment-card/comment-card';
-import { comments } from '../../../moki/moki';
+import { comments } from '../../../mock/mock';
 import CommentForm from '../../comment-form/comment-form';
 import { AuthorizationStatus } from '../../../const';
 import { shuffle, firstToUpperCase } from '../../../utils';
@@ -17,15 +17,22 @@ type PageHeaderProps = {
   isNearPlace: boolean;
   offers: Offer[];
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function PropertyPage({ userName, isNearPlace, offers, favoritesId, handelFavoritesClick }: PageHeaderProps): JSX.Element {
+function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteClick }: PageHeaderProps): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const offer: Offer | undefined = offers.find((item) => String(item.id) === id?.slice(1));
+  const offer = offers.find((item) => String(item.id) === id?.slice(1));
   if (!offer) {
     return <div>Not found</div>;
   }
+  //Проблема! Я переиспользую OfferCard. На главной странице есть mouseOver, а на property нет.
+  //Пока сделала функцию-заглушку. Как быть в таком случае?
+  //Так же в favorites-page, хотела переиспользовать
+  const handleOfferMouseOver: FunctionNumber = (offerId) => {
+    // eslint-disable-next-line no-console
+    console.log(offerId);
+  };
 
   return (
     <div className="page">
@@ -34,7 +41,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, handelFavori
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {shuffle(offer.images).slice(0, IMAGES_COUNT).map((image) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
+              {shuffle(offer.images).slice(0, IMAGES_COUNT).map((image: string) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
             </div>
           </div>
           <div className="property__container container">
@@ -118,8 +125,8 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, handelFavori
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {offers.slice(0, NEAR_COUNT).map((item) => <article className="cities__place-card place-card" key={Math.random()}><OfferCard oneOffer={item} isNearPlace={!isNearPlace} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /></article>)}
+            <div className="cities__places-list places__list tabs__content">
+              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} />))}
             </div>
           </section>
         </div>

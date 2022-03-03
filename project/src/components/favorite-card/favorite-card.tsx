@@ -5,12 +5,12 @@ import { firstToUpperCase } from '../../utils';
 type OfferCardProps = {
   oneFavoriteOffer: Offer;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
-function favoriteCard({ oneFavoriteOffer, favoritesId, handelFavoritesClick }: OfferCardProps): JSX.Element {
+function favoriteCard({ oneFavoriteOffer, favoritesId, onFavoriteClick }: OfferCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, rating, title, type } = oneFavoriteOffer;
-  const isFavoriteStatus = favoritesId.includes(id) ? 1 : 0;
+  const handelFavoriteClick = () => onFavoriteClick(id);
 
   return (
     <article className="favorites__card place-card">
@@ -29,7 +29,7 @@ function favoriteCard({ oneFavoriteOffer, favoritesId, handelFavoritesClick }: O
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button onClick={() => handelFavoritesClick(id)} className={`place-card__bookmark-button button  ${isFavoriteStatus && 'place-card__bookmark-button--active'} `} type="button">
+          <button onClick={handelFavoriteClick} className={`place-card__bookmark-button button  ${favoritesId.includes(id) && 'place-card__bookmark-button--active'} `} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>

@@ -1,10 +1,11 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
-import MainNotEmptyProps from '../../main-not-empty/main-not-empty';
+import Main from '../../main/main';
 import MainEmpty from '../../main-empty/main-empty';
-import { StringArray, Offer, FunctionNumber } from '../../../types/types';
-import { AuthorizationStatus } from '../../../const';
-import { Link } from 'react-router-dom';
+import { StringArray, Offer, FunctionNumber, FunctionString } from '../../../types/types';
+import { AuthorizationStatus, FIRST_TOWN } from '../../../const';
+import { useState } from 'react';
+import CitiesList from '../../cities-list/cities-list';
 
 type MainPageProps = {
   offerCount: number;
@@ -15,12 +16,17 @@ type MainPageProps = {
   offers: Offer[];
   activeOffer: number;
   favoritesId: number[];
-  handelFavoritesClick: FunctionNumber;
+  onFavoriteClick: FunctionNumber;
 }
 
 const isOffers = true;
 
-function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, handelFavoritesClick }: MainPageProps): JSX.Element {
+function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
+  const [cityActive, setActiveCity] = useState(FIRST_TOWN);
+  const handleCityClick: FunctionString = (city: string) => {
+    setActiveCity(city);
+  };
+
   return (
     <div className="page page--gray page--main">
       {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
@@ -30,16 +36,17 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {(Object.entries(cities)).map(([key, city]) => (
-                <li key={key} className="locations__item">
-                  <Link className={city === 'Amsterdam' ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} to='/'>
-                    <span>{key}</span>
-                  </Link>
-                </li>
+                <CitiesList
+                  key={key}
+                  city={city}
+                  onClick={handleCityClick}
+                  cityActive={cityActive}
+                />
               ))}
             </ul>
           </section>
         </div>
-        {isOffers ? <MainNotEmptyProps offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} handelFavoritesClick={handelFavoritesClick} /> : <MainEmpty />}
+        {isOffers ? <Main offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} cityActive={cityActive} /> : <MainEmpty />}
       </main>
     </div>
   );
