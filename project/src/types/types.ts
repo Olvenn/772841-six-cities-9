@@ -39,7 +39,6 @@ export type Comments = {
   offers: Offer[];
 }
 
-
 export type Location = {
   latitude: number;
   longitude: number;
@@ -50,7 +49,6 @@ export type City = {
   name: string;
   location: Location;
 }
-
 
 export type Offer = {
   bedrooms: number;
@@ -71,6 +69,9 @@ export type Offer = {
   type: string;
 }
 
+export interface FunctionOffers {
+  (item: Offer[], favorite: Offer): void;
+}
 export type OfferOne = {
   bedrooms: number;
   city: City;

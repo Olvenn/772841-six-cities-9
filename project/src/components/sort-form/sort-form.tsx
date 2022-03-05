@@ -1,27 +1,39 @@
 import { useState } from 'react';
-import { SortOptions } from '../../const';
-
-const optionActive = 'Popular';
+import { SortTypes } from '../../const';
+import SortOptions from '../sort-options/sort-options';
 
 function SortForm(): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  //evt: ? как типизировать?
   const handleIsOpenClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const [typeSort, setTypeSort] = useState<string>('Popular');
+  const handleTypeSort = (option: string) => {
+    // eslint-disable-next-line no-console
+    // console.log(typeSort);
+    setTypeSort(option);
   };
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span onClick={handleIsOpenClick} className="places__sorting-type" tabIndex={0}>
-        {optionActive}
+        {typeSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
-        {Object.values(SortOptions).map((option) =>
-          <li key={option} className={`places__option ${optionActive === option ? 'places__option--active' : ''}`} tabIndex={0}>{option}</li>)}
+        {(Object.entries(SortTypes)).map(([key, option]) => (
+          <SortOptions
+            key={key}
+            keyOption={key}
+            option={option}
+            onClick={handleTypeSort}
+            optionActive={typeSort}
+          />
+        ))}
       </ul>
     </form >
   );

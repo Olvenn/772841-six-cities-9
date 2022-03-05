@@ -14,6 +14,7 @@ export const setOffers = createAction('main/setOffers',
   }),
 );
 
+
 export const getActiveOffer = createAction('main/getActiveOffer',
   (idActiveOffer: number) => ({
     payload: idActiveOffer,
@@ -21,11 +22,11 @@ export const getActiveOffer = createAction('main/getActiveOffer',
 );
 //idActiveOffer: number | undefined
 
-export const changeOffer = createAction('main/changeFavorite',
-  (offer: Offer) => ({
-    payload: offer,
-  }),
-);
+// export const changeFavorite = createAction('main/changeFavorite',
+//   (offer: Offer) => ({
+//     payload: offer,
+//   }),
+// );
 
 export const setFavorites = createAction('main/setFavorites',
   (offers: Offer[]) => ({
@@ -40,7 +41,7 @@ export const setComments = createAction('property/setComments',
 );
 
 export const setOffersNearby = createAction('property/setOffersNearby',
-  (offersNearby: Offer[]) => ({
+  ( offersNearby: Offer[]) => ({
     payload: offersNearby,
   }),
 );

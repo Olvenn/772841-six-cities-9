@@ -6,18 +6,23 @@ import useMap from './useMap';
 import { URL_MARKER, URL_MARKER_ACTIVE } from '../../const';
 
 export type MapProps = {
-  city: City;
+  activePoint: City;
   offers: Offer[];
   offerActive: number;
+  mapPlace: string;
 }
-function Map({ city, offers, offerActive }: MapProps): JSX.Element {
+function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, activePoint);
+  // eslint-disable-next-line no-console
+  console.log(mapPlace);
+
   const offerIcon = leaflet.icon({
     iconUrl: URL_MARKER,
     iconSize: [27, 39],
     iconAnchor: [13.5, 20],
   });
+
   const offerActiveIcon = leaflet.icon({
     iconUrl: URL_MARKER_ACTIVE,
     iconSize: [27, 39],
@@ -39,10 +44,10 @@ function Map({ city, offers, offerActive }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, offerActive, offerActiveIcon, offerIcon]);
+  }, [map, offers]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${ mapPlace === 'main' ? 'cities__map map' : 'property__map map'}`} ref={mapRef}></section>
   );
 }
 export default Map;

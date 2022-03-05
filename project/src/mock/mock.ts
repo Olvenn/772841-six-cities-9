@@ -1,6 +1,6 @@
 import { Offer } from '../types/types';
 
-export const comments = [
+export const reviews = [
   {
     'id': 1,
     'user': {

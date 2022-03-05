@@ -1,14 +1,21 @@
 import { StringArray, City } from './types/types';
 
-export const FIRST_TOWN = 'Paris';
+export const ACTIVE_TOWN = 'Paris';
 export const ZOOM = 12;
 
-export enum SortOptions {
-  Popular = 'Popular',
-  PriceToHigh = 'Price: low to high',
-  PriceToLow = 'Price: high to low',
-  Rated = 'Top rated first',
-}
+export const SortTypes: StringArray = {
+  Popular: 'Popular',
+  PriceToHigh: 'Price: low to high',
+  PriceToLow: 'Price: high to low',
+  Rated: 'Top rated first',
+};
+
+// export enum SortTypes {
+//   Popular = 'Popular',
+//   PriceToHigh = 'Price: low to high',
+//   PriceToLow = 'Price: high to low',
+//   Rated = 'Top rated first',
+// }
 
 export const cities: StringArray = {
   Paris: 'Paris',

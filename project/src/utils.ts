@@ -1,3 +1,5 @@
+import { Offer } from './types/types';
+
 export const shuffle = (items: string[]) =>  items.sort(() => Math.random() - 0.5);
 
 export const firstToUpperCase = (str: string) => {
@@ -7,3 +9,5 @@ export const firstToUpperCase = (str: string) => {
   }
   return str[0].toUpperCase() + str.slice(1);
 };
+
+export const sortLowToHigh = (offerA: Offer, offerB: Offer) => (offerA.price - offerB.price);

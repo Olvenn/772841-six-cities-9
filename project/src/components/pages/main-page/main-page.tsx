@@ -1,36 +1,35 @@
+import { useAppDispatch, useAppSelector } from '../../../hooks/';
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import Main from '../../main/main';
 import MainEmpty from '../../main-empty/main-empty';
-import { StringArray, Offer, FunctionNumber, FunctionString } from '../../../types/types';
-import { AuthorizationStatus, FIRST_TOWN } from '../../../const';
-import { useState } from 'react';
+import { StringArray, Offer, FunctionOffers, FunctionString } from '../../../types/types';
+import { AuthorizationStatus } from '../../../const';
 import CitiesList from '../../cities-list/cities-list';
+import { changeCity, getActiveOffer } from '../../../store/action';
 
 type MainPageProps = {
-  offerCount: number;
   userName: string;
   cities: StringArray;
   isNearPlace: boolean;
   offer: Offer;
-  offers: Offer[];
-  activeOffer: number;
-  favoritesId: number[];
-  onFavoriteClick: FunctionNumber;
+  onFavoriteClick: FunctionOffers;
 }
 
 const isOffers = true;
 
-function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, activeOffer, favoritesId, onFavoriteClick }: MainPageProps): JSX.Element {
-  const [cityActive, setActiveCity] = useState(FIRST_TOWN);
+function MainPage({ userName, cities, isNearPlace, offer, onFavoriteClick }: MainPageProps): JSX.Element {
+  const { accommodations, town } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
   const handleCityClick: FunctionString = (city: string) => {
-    setActiveCity(city);
+    dispatch(getActiveOffer(-1));
+    dispatch(changeCity(city));
   };
 
   return (
     <div className="page page--gray page--main">
       {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
-      <main className={`${isOffers ? 'page__main page__main--index' : 'page__main page__main--index page__main--index-empty'}`}>
+      <main className={`${accommodations ? 'page__main page__main--index' : 'page__main page__main--index page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -40,13 +39,13 @@ function MainPage({ userName, cities, offerCount, isNearPlace, offer, offers, ac
                   key={key}
                   city={city}
                   onClick={handleCityClick}
-                  cityActive={cityActive}
+                  cityActive={town}
                 />
               ))}
             </ul>
           </section>
         </div>
-        {isOffers ? <Main offerCount={offerCount} isNearPlace={isNearPlace} offers={offers} activeOffer={activeOffer} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} cityActive={cityActive} /> : <MainEmpty />}
+        {isOffers ? <Main isNearPlace={isNearPlace} onFavoriteClick={onFavoriteClick} cityActive={town} /> : <MainEmpty />}
       </main>
     </div>
   );

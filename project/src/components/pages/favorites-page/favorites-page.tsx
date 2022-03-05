@@ -1,19 +1,19 @@
 import PageHeader from '../../page-header/page-header';
 import PageFooter from '../../page-footer/page-footer';
 import FavoriteCard from '../../favorite-card/favorite-card';
-import { favorites } from '../../../mock/favorites';
 import { Link } from 'react-router-dom';
-import { FunctionNumber } from '../../../types/types';
+import { FunctionOffers } from '../../../types/types';
+import { useAppSelector } from '../../../hooks/';
 
 type FavoritesPageProps = {
   userName: string;
   isEmpty: boolean;
-  favoritesId: number[];
-  onFavoriteClick: FunctionNumber;
+  onFavoriteClick: FunctionOffers;
 }
 
-function FavoritesPage({ userName, isEmpty, favoritesId, onFavoriteClick }: FavoritesPageProps): JSX.Element {
-  const listVCities = new Set(favorites.map((favorite) => favorite.city.name));
+function FavoritesPage({ userName, isEmpty, onFavoriteClick }: FavoritesPageProps): JSX.Element {
+  const { favorites } = useAppSelector((state) => state);
+  const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (
     <div className="page">
@@ -25,7 +25,7 @@ function FavoritesPage({ userName, isEmpty, favoritesId, onFavoriteClick }: Favo
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
                 {
-                  [...listVCities].map((favoriteCity: string) => (
+                  [...listCities].map((favoriteCity: string) => (
                     <li key={favoriteCity} className="favorites__locations-items">
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
@@ -35,7 +35,7 @@ function FavoritesPage({ userName, isEmpty, favoritesId, onFavoriteClick }: Favo
                         </div>
                       </div>
                       <div className="favorites__places">
-                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={favorite.id}><FavoriteCard oneFavoriteOffer={favorite} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} /></article>)}
+                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={favorite.id}><FavoriteCard oneFavoriteOffer={favorite} onFavoriteClick={onFavoriteClick} /></article>)}
                       </div>
                     </li>
                   ),
