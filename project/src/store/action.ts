@@ -13,7 +13,6 @@ export const setOffers = createAction('main/setOffers',
     payload: accommodations,
   }),
 );
-
 export const getActiveOffer = createAction('main/getActiveOffer',
   (idActiveOffer: number) => ({
     payload: idActiveOffer,
@@ -33,6 +32,11 @@ export const setFavorites = createAction('main/setFavorites',
   }),
 );
 
+export const changeSort = createAction('main/changeSort',
+  (sort: string) => ({
+    payload: sort,
+  }),
+);
 export const setComments = createAction('property/setComments',
   (comment: Comment[]) => ({
     payload: comment,

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, setOffers, getActiveOffer, setFavorites, setComments, setOffersNearby, changeOffer } from './action';
+import { changeCity, setOffers, getActiveOffer, setFavorites, setComments, setOffersNearby, changeOffer, changeSort } from './action';
 import { ACTIVE_TOWN } from '../const';
 import { offers } from '../mock/offers';
 import { favorites } from '../mock/favorites';
@@ -10,6 +10,7 @@ const initialState = {
   accommodations: offers,
   offer: {},
   idActiveOffer: -1,
+  sort: 'Popular',
   favorites: favorites,
   review: undefined,
   reviews: reviews,
@@ -30,9 +31,12 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffers, (state, action) => {
       state.accommodations = action.payload;
     })
+    .addCase(changeSort, (state, action) => {
+      state.sort = action.payload;
+    })
     .addCase(changeOffer, (state, action) => {
       state.accommodations = state.accommodations.map((accommodation) =>
-      accommodation.id === action.payload.id ? action.payload : accommodation);;
+        accommodation.id === action.payload.id ? action.payload : accommodation);
     })
     .addCase(setComments, (state, action) => {
       state.reviews = action.payload;

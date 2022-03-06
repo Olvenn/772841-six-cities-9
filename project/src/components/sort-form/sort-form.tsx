@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { SortTypes } from '../../const';
 import SortOptions from '../sort-options/sort-options';
+import { FunctionString } from '../../types/types';
 
-function SortForm(): JSX.Element {
+
+type SortFormProps = {
+  onSortClick: FunctionString;
+}
+
+function SortForm({ onSortClick }: SortFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleIsOpenClick = () => {
     setIsOpen(!isOpen);
@@ -27,6 +33,7 @@ function SortForm(): JSX.Element {
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
         {(Object.entries(SortTypes)).map(([key, option]) => (
           <SortOptions
+            onSortClick={onSortClick}
             key={key}
             keyOption={key}
             option={option}

@@ -5,11 +5,13 @@ type SortOptionsProps = {
   keyOption: string;
   option: string;
   onClick: FunctionString;
+  onSortClick: FunctionString;
 }
 
-function SortOptions({ option, onClick, optionActive, keyOption }: SortOptionsProps): JSX.Element {
+function SortOptions({ option, onClick, optionActive, keyOption, onSortClick }: SortOptionsProps): JSX.Element {
   const handleClick = () => {
     onClick(keyOption);
+    onSortClick(keyOption);
   };
   // eslint-disable-next-line no-console
   // console.log(optionActive, keyOption);

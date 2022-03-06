@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
+import { CITIES } from '../../const';
+import { sortLowToHigh } from '../../utils';
+import { Offer, FunctionOffers, FunctionNumber, FunctionString } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
 import Map from '../map/map';
-import { Offer, FunctionOffers, FunctionNumber } from '../../types/types';
-import { CITIES } from '../../const';
 import { getActiveOffer } from '../../store/action';
+
 
 const ITEMS_COUNT = 5;
 
@@ -15,9 +18,20 @@ type MainProps = {
 }
 
 function Main({ isNearPlace, onFavoriteClick, cityActive }: MainProps): JSX.Element {
+  const [sort, setSort] = useState('');
+  const handleSortClick: FunctionString = (sort) => {
+    setSort(sort);
+  };
+  // eslint-disable-next-line no-console
+  console.log(sort);
+  //дальше будет выбираться сортировка, временно, чтобы не выскакивала ошибка
+
   const dispatch = useAppDispatch();
   const { town, accommodations, idActiveOffer } = useAppSelector((state) => state);
   const offers = accommodations.filter((offer: Offer) => offer.city.name === town);
+  // Можно ли делать сортировку?
+  offers.sort(sortLowToHigh);
+
   const handleOfferMouseOver: FunctionNumber = (offerId) => {
     dispatch(getActiveOffer(offerId));
   };
@@ -33,14 +47,14 @@ function Main({ isNearPlace, onFavoriteClick, cityActive }: MainProps): JSX.Elem
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found"> {offers.length} places to stay in {town}</b>
-          <SortForm />
+          <SortForm onSortClick={handleSortClick} />
           <div className="cities__places-list places__list tabs__content">
             {offers.slice(0, ITEMS_COUNT).map((offer) => (<OfferCard offer={offer} isNearPlace={isNearPlace} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
           </div>
         </section>
         <section className="visually-hidden cities__map map">{idActiveOffer}</section>
         <div className="cities__right-section">
-          <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer}  mapPlace={'main'} />
+          <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer} mapPlace={'main'} />
         </div>
       </div >
     </div >

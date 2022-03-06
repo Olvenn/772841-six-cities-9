@@ -40,7 +40,7 @@ function PropertyPage({ userName, isNearPlace, offers, onFavoriteClick }: PageHe
     // eslint-disable-next-line no-console
     console.log(offerId);
   };
-  // const images = shuffle(offer.images);
+  // const images = shuffle(offer.images); не работает
   const images = offer.images;
 
   return (
@@ -130,7 +130,7 @@ function PropertyPage({ userName, isNearPlace, offers, onFavoriteClick }: PageHe
             </div>
           </div>
           <section className="property__map map">
-            <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer}  mapPlace={'property'} />
+            <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer} mapPlace={'property'} />
           </section>
         </section>
         <div className="container">
