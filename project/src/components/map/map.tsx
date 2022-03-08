@@ -14,8 +14,6 @@ export type MapProps = {
 function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, activePoint);
-  // eslint-disable-next-line no-console
-  console.log(mapPlace);
 
   const offerIcon = leaflet.icon({
     iconUrl: URL_MARKER,
@@ -44,10 +42,10 @@ function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Elem
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, offerActive, offerIcon, offerActiveIcon]);
 
   return (
-    <section className={`${ mapPlace === 'main' ? 'cities__map map' : 'property__map map'}`} ref={mapRef}></section>
+    <section className={`${mapPlace === 'main' ? 'cities__map map' : 'property__map map'}`} ref={mapRef}></section>
   );
 }
 export default Map;

@@ -14,9 +14,6 @@ const Setting = {
   IS_NEAR_PLACE: false,
 };
 
-// eslint-disable-next-line no-console
-console.log(offers);
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

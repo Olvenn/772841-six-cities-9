@@ -7,9 +7,10 @@ import { AuthorizationStatus } from '../../../const';
 import { firstToUpperCase } from '../../../utils';
 import OfferCard from '../../offer-card/offer-card';
 import { useParams } from 'react-router-dom';
-import { Offer, FunctionNumber, FunctionOffers } from '../../../types/types';
+import { Offer } from '../../../types/types';
 import Map from '../../map/map';
-import { useAppSelector } from '../../../hooks/';
+import { useAppSelector, useAppDispatch } from '../../../hooks/';
+import { setFavorites, changeOffers } from '../../../store/action';
 // import { shuffle } from '../../../utils';
 
 const IMAGES_COUNT = 6;
@@ -19,28 +20,27 @@ type PageHeaderProps = {
   userName: string;
   isNearPlace: boolean;
   offers: Offer[];
-  onFavoriteClick: FunctionOffers;
 }
 
-function PropertyPage({ userName, isNearPlace, offers, onFavoriteClick }: PageHeaderProps): JSX.Element {
-  const { favorites } = useAppSelector((state) => state);
+function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.main.favorites);
   const { id } = useParams<{ id: string }>();
   const offer = offers.find((item) => String(item.id) === id?.slice(1));
+
   if (!offer) {
     return <div>Not found</div>;
   }
+
   const activePoint = offer.city;
   const idActiveOffer = offer.id;
   const handleFavoriteClick = () => {
-    onFavoriteClick(favorites, offer);
+    const newfavorites = (!offer.isFavorite) ? [offer, ...favorites] : favorites.filter((item) => item.id !== offer.id);
+    dispatch(setFavorites(newfavorites));
+    dispatch(changeOffers(offer));
   };
-  const isFavorites = favorites.some((favorite) => favorite.id === offer.id);
-  //Как поступить с этим, если на одной стр. есть действие, а на другой нет
-  const handleOfferMouseOver: FunctionNumber = (offerId) => {
-    // eslint-disable-next-line no-console
-    console.log(offerId);
-  };
-  // const images = shuffle(offer.images); не работает
+
+  // const images = shuffle(offer.images); не работает, надеюсь уточнить на консультации
   const images = offer.images;
 
   return (
@@ -63,7 +63,7 @@ function PropertyPage({ userName, isNearPlace, offers, onFavoriteClick }: PageHe
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button onClick={handleFavoriteClick} className={`property__bookmark-button button  ${isFavorites && 'property__bookmark-button--active'} `} type="button">
+                <button onClick={handleFavoriteClick} className={`property__bookmark-button button  ${offer.isFavorite && 'property__bookmark-button--active'} `} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -137,7 +137,7 @@ function PropertyPage({ userName, isNearPlace, offers, onFavoriteClick }: PageHe
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="cities__places-list places__list tabs__content">
-              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} />))}
+              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} key={offerNearby.id} />))}
             </div>
           </section>
         </div>

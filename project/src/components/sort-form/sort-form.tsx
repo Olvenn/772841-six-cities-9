@@ -16,8 +16,6 @@ function SortForm({ onSortClick }: SortFormProps): JSX.Element {
 
   const [typeSort, setTypeSort] = useState<string>('Popular');
   const handleTypeSort = (option: string) => {
-    // eslint-disable-next-line no-console
-    // console.log(typeSort);
     setTypeSort(option);
   };
 

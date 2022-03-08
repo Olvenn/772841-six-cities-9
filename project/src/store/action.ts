@@ -7,10 +7,9 @@ export const changeCity = createAction('main/changeCity',
     payload: city,
   }),
 );
-
 export const setOffers = createAction('main/setOffers',
-  (accommodations: Offer[]) => ({
-    payload: accommodations,
+  (offers: Offer[]) => ({
+    payload: offers,
   }),
 );
 export const getActiveOffer = createAction('main/getActiveOffer',
@@ -18,14 +17,12 @@ export const getActiveOffer = createAction('main/getActiveOffer',
     payload: idActiveOffer,
   }),
 );
-//idActiveOffer: number | undefined
-
-export const changeOffer = createAction('main/changeFavorite',
+//idActiveOffer: number | undefined Не получилось, надеюсь уточнить на консультации
+export const changeOffers = createAction('main/changeFavorite',
   (offer: Offer) => ({
     payload: offer,
   }),
 );
-
 export const setFavorites = createAction('main/setFavorites',
   (offers: Offer[]) => ({
     payload: offers,

@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom';
-import { Offer, FunctionOffers } from '../../types/types';
+import { Offer } from '../../types/types';
 import { firstToUpperCase } from '../../utils';
-import { useAppSelector } from '../../hooks/';
+import { useAppSelector, useAppDispatch } from '../../hooks/';
+import { setFavorites, changeOffers } from '../../store/action';
 
 type OfferCardProps = {
   oneFavoriteOffer: Offer;
-  onFavoriteClick: FunctionOffers;
 }
 
-function FavoriteCard({ oneFavoriteOffer, onFavoriteClick }: OfferCardProps): JSX.Element {
+function FavoriteCard({ oneFavoriteOffer }: OfferCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, rating, title, type } = oneFavoriteOffer;
-  const { favorites } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const { favorites } = useAppSelector((state) => state.main);
+
   const handleFavoriteClick = () => {
-    onFavoriteClick(favorites, oneFavoriteOffer);
+    const newfavorites = (!oneFavoriteOffer.isFavorite) ? [oneFavoriteOffer, ...favorites] : favorites.filter((item) => item.id !== oneFavoriteOffer.id);
+    dispatch(setFavorites(newfavorites));
+    dispatch(changeOffers(oneFavoriteOffer));
   };
 
   return (

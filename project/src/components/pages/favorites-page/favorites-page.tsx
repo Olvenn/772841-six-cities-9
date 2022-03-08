@@ -2,17 +2,15 @@ import PageHeader from '../../page-header/page-header';
 import PageFooter from '../../page-footer/page-footer';
 import FavoriteCard from '../../favorite-card/favorite-card';
 import { Link } from 'react-router-dom';
-import { FunctionOffers } from '../../../types/types';
 import { useAppSelector } from '../../../hooks/';
 
 type FavoritesPageProps = {
   userName: string;
   isEmpty: boolean;
-  onFavoriteClick: FunctionOffers;
 }
 
-function FavoritesPage({ userName, isEmpty, onFavoriteClick }: FavoritesPageProps): JSX.Element {
-  const { favorites } = useAppSelector((state) => state);
+function FavoritesPage({ userName, isEmpty }: FavoritesPageProps): JSX.Element {
+  const { favorites } = useAppSelector((state) => state.main);
   const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (
@@ -35,7 +33,7 @@ function FavoritesPage({ userName, isEmpty, onFavoriteClick }: FavoritesPageProp
                         </div>
                       </div>
                       <div className="favorites__places">
-                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={favorite.id}><FavoriteCard oneFavoriteOffer={favorite} onFavoriteClick={onFavoriteClick} /></article>)}
+                        {favorites.filter((offer) => offer.city.name === favoriteCity).map((favorite) => <article className="favorites__card place-card" key={favorite.id}><FavoriteCard oneFavoriteOffer={favorite} /></article>)}
                       </div>
                     </li>
                   ),

@@ -7,9 +7,6 @@ import LoginPage from '../pages/login-page/login-page';
 import PropertyPage from '../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { useAppDispatch } from '../../hooks/';
-import { setFavorites } from '../../store/action';
-
 
 type AppProps = {
   userName: string;
@@ -21,31 +18,19 @@ type AppProps = {
 }
 
 function App({ userName, cities, isEmpty, isNearPlace, offer, offers }: AppProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const handleFavoriteClick = (favorites: Offer[], favorite: Offer): void => {
-    const isFavorites = favorites.some((item) => item.id === favorite.id);
-    if (!isFavorites) {
-      const newfavorites = [favorite, ...favorites];
-      dispatch(setFavorites(newfavorites));
-    } else {
-      const newfavorites = favorites.filter((item) => item.id !== favorite.id);
-      dispatch(setFavorites(newfavorites));
-    }
-  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} onFavoriteClick={handleFavoriteClick} />}
+          element={<MainPage userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} />}
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesPage userName={userName} isEmpty={isEmpty} onFavoriteClick={handleFavoriteClick} />
+              <FavoritesPage userName={userName} isEmpty={isEmpty} />
             </PrivateRoute>
           }
         />
@@ -55,7 +40,7 @@ function App({ userName, cities, isEmpty, isNearPlace, offer, offers }: AppProps
         />
         <Route
           path={AppRoute.Property}
-          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} onFavoriteClick={handleFavoriteClick} />}
+          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} />}
         />
         <Route
           path="*"

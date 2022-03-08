@@ -17,7 +17,7 @@ const propertyReducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersNearby, (state, action) => {
       state.offersNearby = action.payload;
-    })
+    });
 });
 
 export { propertyReducer };

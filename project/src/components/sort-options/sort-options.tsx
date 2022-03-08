@@ -13,8 +13,6 @@ function SortOptions({ option, onClick, optionActive, keyOption, onSortClick }: 
     onClick(keyOption);
     onSortClick(keyOption);
   };
-  // eslint-disable-next-line no-console
-  // console.log(optionActive, keyOption);
 
   return (
     <li onClick={handleClick} className={`places__option ${optionActive === keyOption ? 'places__option--active' : ''}`} tabIndex={0}>{option}</li>
