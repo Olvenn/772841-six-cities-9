@@ -1,27 +1,44 @@
 import { useState } from 'react';
-import { SortOptions } from '../../const';
+import { SortTypes } from '../../const';
+import SortOptions from '../sort-options/sort-options';
+import { FunctionString } from '../../types/types';
 
-const optionActive = 'Popular';
 
-function SortForm(): JSX.Element {
+type SortFormProps = {
+  onSortClick: FunctionString;
+}
+
+function SortForm({ onSortClick }: SortFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  //evt: ? как типизировать?
   const handleIsOpenClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const [typeSort, setTypeSort] = useState<string>('Popular');
+  const handleTypeSort = (option: string) => {
+    setTypeSort(option);
   };
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span onClick={handleIsOpenClick} className="places__sorting-type" tabIndex={0}>
-        {optionActive}
+        {typeSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
-        {Object.values(SortOptions).map((option) =>
-          <li key={option} className={`places__option ${optionActive === option ? 'places__option--active' : ''}`} tabIndex={0}>{option}</li>)}
+        {(Object.entries(SortTypes)).map(([key, option]) => (
+          <SortOptions
+            onSortClick={onSortClick}
+            key={key}
+            keyOption={key}
+            option={option}
+            onClick={handleTypeSort}
+            optionActive={typeSort}
+          />
+        ))}
       </ul>
     </form >
   );

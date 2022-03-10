@@ -13,7 +13,7 @@ function CitiesList({ cityActive, city, onClick }: CitiesListProps): JSX.Element
   };
 
   return (
-    <li onClick={handleClick}  className="locations__item">
+    <li onClick={handleClick} className="locations__item">
       <Link className={city === cityActive ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} to='/'>
         <span>{city}</span>
       </Link>

@@ -1,20 +1,29 @@
 import { Link } from 'react-router-dom';
 import { firstToUpperCase } from '../../utils';
 import { Offer, FunctionNumber } from '../../types/types';
+import { useAppSelector, useAppDispatch } from '../../hooks/';
+import { setFavorites, changeOffers } from '../../store/action';
 
 type OfferCardProps = {
   offer: Offer;
   isNearPlace: boolean;
-  favoritesId: number[];
-  onFavoriteClick: FunctionNumber;
-  onOfferMouseOver: FunctionNumber;
+  onOfferMouseOver?: FunctionNumber;
 }
 
-function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick, onOfferMouseOver }: OfferCardProps): JSX.Element {
+function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JSX.Element {
   const handleMouseOver = () => {
-    onOfferMouseOver(offer.id);
+    if (onOfferMouseOver) {
+      onOfferMouseOver(offer.id);
+    }
   };
-
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.main.favorites);
+  const handleFavoriteClick = () => {
+    const newfavorites = (!offer.isFavorite) ? [offer, ...favorites] : favorites.filter((item) => item.id !== offer.id);
+    dispatch(setFavorites(newfavorites));
+    dispatch(changeOffers(offer));
+  };
+  const isFavorites = favorites.some((favorite) => favorite.id === offer.id);
   return (
     <article className="cities__place-card place-card" onMouseOver={handleMouseOver}>
       {offer.isPremium &&
@@ -32,7 +41,7 @@ function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick, onOfferMo
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button onClick={() => onFavoriteClick(offer.id)} className={`place-card__bookmark-button button  ${favoritesId.includes(offer.id) && 'place-card__bookmark-button--active'} `} type="button">
+          <button onClick={handleFavoriteClick} className={`place-card__bookmark-button button ${isFavorites && 'place-card__bookmark-button--active'} `} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -49,8 +58,8 @@ function OfferCard({ offer, isNearPlace, favoritesId, onFavoriteClick, onOfferMo
           <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{firstToUpperCase(offer.type)}</p>
-      </div>
-    </article>
+      </div >
+    </article >
   );
 }
 export default OfferCard;

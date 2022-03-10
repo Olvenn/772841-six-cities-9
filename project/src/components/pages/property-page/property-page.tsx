@@ -1,13 +1,17 @@
 import PageHeader from '../../page-header/page-header';
 import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import CommentCard from '../../comment-card/comment-card';
-import { comments } from '../../../mock/mock';
+import { reviews } from '../../../mock/mock';
 import CommentForm from '../../comment-form/comment-form';
 import { AuthorizationStatus } from '../../../const';
-import { shuffle, firstToUpperCase } from '../../../utils';
+import { firstToUpperCase } from '../../../utils';
 import OfferCard from '../../offer-card/offer-card';
 import { useParams } from 'react-router-dom';
-import { Offer, FunctionNumber } from '../../../types/types';
+import { Offer } from '../../../types/types';
+import Map from '../../map/map';
+import { useAppSelector, useAppDispatch } from '../../../hooks/';
+import { setFavorites, changeOffers } from '../../../store/action';
+// import { shuffle } from '../../../utils';
 
 const IMAGES_COUNT = 6;
 const NEAR_COUNT = 3;
@@ -16,23 +20,28 @@ type PageHeaderProps = {
   userName: string;
   isNearPlace: boolean;
   offers: Offer[];
-  favoritesId: number[];
-  onFavoriteClick: FunctionNumber;
 }
 
-function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteClick }: PageHeaderProps): JSX.Element {
+function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.main.favorites);
   const { id } = useParams<{ id: string }>();
   const offer = offers.find((item) => String(item.id) === id?.slice(1));
+
   if (!offer) {
     return <div>Not found</div>;
   }
-  //Проблема! Я переиспользую OfferCard. На главной странице есть mouseOver, а на property нет.
-  //Пока сделала функцию-заглушку. Как быть в таком случае?
-  //Так же в favorites-page, хотела переиспользовать
-  const handleOfferMouseOver: FunctionNumber = (offerId) => {
-    // eslint-disable-next-line no-console
-    console.log(offerId);
+
+  const activePoint = offer.city;
+  const idActiveOffer = offer.id;
+  const handleFavoriteClick = () => {
+    const newfavorites = (!offer.isFavorite) ? [offer, ...favorites] : favorites.filter((item) => item.id !== offer.id);
+    dispatch(setFavorites(newfavorites));
+    dispatch(changeOffers(offer));
   };
+
+  // const images = shuffle(offer.images); не работает, надеюсь уточнить на консультации
+  const images = offer.images;
 
   return (
     <div className="page">
@@ -41,7 +50,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {shuffle(offer.images).slice(0, IMAGES_COUNT).map((image: string) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
+              {images.slice(0, IMAGES_COUNT).map((image: string) => <div className="property__image-wrapper" key={Math.random()}><img className="property__image" src={image} alt="Photograph studio" /></div>)}
             </div>
           </div>
           <div className="property__container container">
@@ -54,7 +63,7 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button onClick={handleFavoriteClick} className={`property__bookmark-button button  ${offer.isFavorite && 'property__bookmark-button--active'} `} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -114,19 +123,21 @@ function PropertyPage({ userName, isNearPlace, offers, favoritesId, onFavoriteCl
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ul className="reviews__list">
-                  {comments.map((review) => <li className="reviews__item" key={review.id}><CommentCard feedback={review} /></li>)}
+                  {reviews.map((review) => <li className="reviews__item" key={review.id}><CommentCard feedback={review} /></li>)}
                 </ul>
                 <CommentForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer} mapPlace={'property'} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="cities__places-list places__list tabs__content">
-              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} favoritesId={favoritesId} onFavoriteClick={onFavoriteClick} onOfferMouseOver={handleOfferMouseOver} key={offerNearby.id} />))}
+              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} key={offerNearby.id} />))}
             </div>
           </section>
         </div>
