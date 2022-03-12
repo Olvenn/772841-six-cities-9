@@ -4,21 +4,16 @@ import FavoriteCard from '../../favorite-card/favorite-card';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/';
 
-type FavoritesPageProps = {
-  userName: string;
-  isEmpty: boolean;
-}
-
-function FavoritesPage({ userName, isEmpty }: FavoritesPageProps): JSX.Element {
-  const { favorites } = useAppSelector((state) => state.main);
+function FavoritesPage(): JSX.Element {
+  const favorites = useAppSelector((state) => state.main.favorites);
   const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (
     <div className="page">
-      <PageHeader userName={userName} />
+      <PageHeader />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {isEmpty ? (
+          {favorites.length? (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">

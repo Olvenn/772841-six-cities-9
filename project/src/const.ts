@@ -1,15 +1,16 @@
-import { StringArray, City } from './types/types';
+import { City } from './types/types';
 
 export const ACTIVE_TOWN = 'Paris';
 export const ZOOM = 12;
 
-export const SortTypes: StringArray = {
-  Popular: 'Popular',
-  PriceToHigh: 'Price: low to high',
-  PriceToLow: 'Price: high to low',
-  Rated: 'Top rated first',
+export const SortTypes: {[index: string]: string} = {
+  'Popular': 'Popular',
+  'PriceToHigh': 'Price: low to high',
+  'PriceToLow': 'Price: high to low',
+  'Rated': 'Top rated first',
 };
 
+//В чем разница
 // export enum SortTypes {
 //   Popular = 'Popular',
 //   PriceToHigh = 'Price: low to high',
@@ -17,7 +18,7 @@ export const SortTypes: StringArray = {
 //   Rated = 'Top rated first',
 // }
 
-export const cities: StringArray = {
+export const cities: {[index: string]: string} = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -101,3 +102,21 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum APIRoute {
+  Offer = '/hotels/',
+  Offers = '/hotels',
+  OffersNearby = '/nearby',
+  Favorites = '/favorite',
+  Comments = '/comments/',
+  Login = '/login',
+  Logout = '/logout',
+}
+///hotels/{hotelId}/nearby,  get /hotels/{hotelId},  post /favorite/{hotelId}/{status}
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}

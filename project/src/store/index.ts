@@ -1,12 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { mainReducer } from './reducers/reducer-main';
-import { propertyReducer } from './reducers/reducer-property';
+import { redirect } from './middlewares/redirect';
+import { createAPI } from '../services/api';
+import { main } from './reducers/main';
+import { property } from './reducers/property';
 
-const reducer = combineReducers({
-  main: mainReducer,
-  property: propertyReducer,
+export const api = createAPI();
+export const reducer = combineReducers({
+  main: main,
+  property: property,
 });
 
+export const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
-export const store = configureStore({ reducer });
+//А как диспачить асихронное дейсвие без Middleware?

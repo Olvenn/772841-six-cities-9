@@ -14,13 +14,11 @@ export type MapProps = {
 function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, activePoint);
-
   const offerIcon = leaflet.icon({
     iconUrl: URL_MARKER,
     iconSize: [27, 39],
     iconAnchor: [13.5, 20],
   });
-
   const offerActiveIcon = leaflet.icon({
     iconUrl: URL_MARKER_ACTIVE,
     iconSize: [27, 39],
@@ -42,6 +40,7 @@ function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Elem
           .addTo(map);
       });
     }
+  //Почему он просит offerIcon, offerActiveIcon?
   }, [map, offers, offerActive, offerIcon, offerActiveIcon]);
 
   return (

@@ -1,0 +1,19 @@
+.coverLoading {
+  width: 100%;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+}
+
+.load {
+  width: 300px;
+  height: auto;
+}
+
+
+.coverImg {
+  width: 150px;
+  margin-left: -50px;
+
+}
+

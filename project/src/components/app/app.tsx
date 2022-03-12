@@ -1,36 +1,43 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { StringArray, Offer } from '../../types/types';
+import { Route, Routes } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
 import MainPage from '../pages/main-page/main-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import PropertyPage from '../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import { isCheckedAuth } from '../../main';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
-  userName: string;
-  cities: StringArray;
-  isEmpty: boolean;
+  cities: { [index: string]: string };
   isNearPlace: boolean;
-  offer: Offer;
-  offers: Offer[];
 }
 
-function App({ userName, cities, isEmpty, isNearPlace, offer, offers }: AppProps): JSX.Element {
+function App({ cities, isNearPlace }: AppProps): JSX.Element {
+  const { authorizationStatus, isLoading } = useAppSelector((state) => state.main);
+
+  if (isCheckedAuth(authorizationStatus) || !isLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage userName={userName} cities={cities} isNearPlace={isNearPlace} offer={offer} />}
+          element={<MainPage cities={cities} isNearPlace={isNearPlace} />}
         />
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesPage userName={userName} isEmpty={isEmpty} />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <FavoritesPage />
             </PrivateRoute>
           }
         />
@@ -40,14 +47,14 @@ function App({ userName, cities, isEmpty, isNearPlace, offer, offers }: AppProps
         />
         <Route
           path={AppRoute.Property}
-          element={<PropertyPage userName={userName} isNearPlace={isNearPlace} offers={offers} />}
+          element={<PropertyPage isNearPlace={isNearPlace} />}
         />
         <Route
           path="*"
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 export default App;

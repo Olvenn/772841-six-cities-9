@@ -1,30 +1,25 @@
 import PageHeader from '../../page-header/page-header';
-import PageHeaderNoLogged from '../../page-header-no-logged/page-header-no-logged';
 import CommentCard from '../../comment-card/comment-card';
 import { reviews } from '../../../mock/mock';
 import CommentForm from '../../comment-form/comment-form';
-import { AuthorizationStatus } from '../../../const';
 import { firstToUpperCase } from '../../../utils';
 import OfferCard from '../../offer-card/offer-card';
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../../types/types';
 import Map from '../../map/map';
 import { useAppSelector, useAppDispatch } from '../../../hooks/';
-import { setFavorites, changeOffers } from '../../../store/action';
-// import { shuffle } from '../../../utils';
+import { changeFavoriteAction } from '../../../store/api-actions';
 
 const IMAGES_COUNT = 6;
 const NEAR_COUNT = 3;
 
 type PageHeaderProps = {
-  userName: string;
   isNearPlace: boolean;
-  offers: Offer[];
 }
 
-function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.Element {
+function PropertyPage({ isNearPlace }: PageHeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.main.favorites);
+  const offers = useAppSelector((state) => state.main.offers);
+  //Делают ли так в реальном проекте?
   const { id } = useParams<{ id: string }>();
   const offer = offers.find((item) => String(item.id) === id?.slice(1));
 
@@ -32,12 +27,8 @@ function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.E
     return <div>Not found</div>;
   }
 
-  const activePoint = offer.city;
-  const idActiveOffer = offer.id;
   const handleFavoriteClick = () => {
-    const newfavorites = (!offer.isFavorite) ? [offer, ...favorites] : favorites.filter((item) => item.id !== offer.id);
-    dispatch(setFavorites(newfavorites));
-    dispatch(changeOffers(offer));
+    dispatch(changeFavoriteAction(offer));
   };
 
   // const images = shuffle(offer.images); не работает, надеюсь уточнить на консультации
@@ -45,7 +36,7 @@ function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.E
 
   return (
     <div className="page">
-      {AuthorizationStatus.Auth === 'AUTH' ? <PageHeader userName={userName} /> : <PageHeaderNoLogged />}
+      {<PageHeader />}
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -130,7 +121,7 @@ function PropertyPage({ userName, isNearPlace, offers }: PageHeaderProps): JSX.E
             </div>
           </div>
           <section className="property__map map">
-            <Map activePoint={activePoint} offers={offers} offerActive={idActiveOffer} mapPlace={'property'} />
+            <Map activePoint={offer.city} offers={offers} offerActive={offer.id} mapPlace={'property'} />
           </section>
         </section>
         <div className="container">
