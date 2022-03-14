@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
+import {useAppDispatch} from '../../../hooks';
+import {FormEvent} from 'react';
+import {loginAction} from '../../../store/api-actions';
 import { useState } from 'react';
 import Logo from '../../logo/logo';
+import {AuthData} from '../../../types/auth-data';
+
 
 function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,6 +19,19 @@ function LoginPage(): JSX.Element {
   const handlePasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setPassword(evt.target.value);
+  };
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
+  };
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (login !== null && password !== null) {
+      onSubmit({
+        login: login,
+        password: password,
+      });
+    }
   };
 
   return (
@@ -31,7 +50,7 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" action="#" onSubmit={handleSubmit} method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" value={login} onChange={handleLoginChange} type="email" name="email" placeholder="Email" required />

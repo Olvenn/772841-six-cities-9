@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { FunctionString } from '../../types/types';
 
 type CitiesListProps = {
   cityActive: string;
   city: string;
-  onClick: FunctionString
+  onClick: (item: string) => void;
 }
 
 function CitiesList({ cityActive, city, onClick }: CitiesListProps): JSX.Element {

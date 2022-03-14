@@ -1,16 +1,12 @@
-import { FunctionString } from '../../types/types';
-
-type SortOptionsProps = {
+type SortOptionProps = {
   optionActive: string;
   keyOption: string;
   option: string;
-  onClick: FunctionString;
-  onSortClick: FunctionString;
+  onSortClick: (item: string) => void;
 }
 
-function SortOptions({ option, onClick, optionActive, keyOption, onSortClick }: SortOptionsProps): JSX.Element {
+function SortOption({ option, optionActive, keyOption, onSortClick }: SortOptionProps): JSX.Element {
   const handleClick = () => {
-    onClick(keyOption);
     onSortClick(keyOption);
   };
 
@@ -18,4 +14,4 @@ function SortOptions({ option, onClick, optionActive, keyOption, onSortClick }: 
     <li onClick={handleClick} className={`places__option ${optionActive === keyOption ? 'places__option--active' : ''}`} tabIndex={0}>{option}</li>
   );
 }
-export default SortOptions;
+export default SortOption;

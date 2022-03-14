@@ -9,8 +9,8 @@ export const firstToUpperCase = (str: string) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
-export const sortPriceLowToHigh = (offerA: Offer, offerB: Offer) => (offerA.price - offerB.price);
-export const sortPriceHighToLow = (offerA: Offer, offerB: Offer) => (offerB.price - offerA.price);
-export const sortRating = (offerA: Offer, offerB: Offer) => (offerB.rating - offerA.rating);
+export const sortByPriceAsc = (a: Offer, b: Offer) => (a.price - b.price);
+export const sortByPriceDesc = (a: Offer, b: Offer) => (b.price - a.price);
+export const sortByRating = (a: Offer, b: Offer) => (b.rating - a.rating);
 
 export const filterByCityName = (offers: Offer[], cityName: string) => offers.filter((offer: Offer) => offer.city.name === cityName);

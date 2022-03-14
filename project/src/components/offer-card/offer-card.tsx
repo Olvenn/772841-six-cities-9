@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { firstToUpperCase } from '../../utils';
-import { Offer, FunctionNumber } from '../../types/types';
+import { Offer } from '../../types/types';
 import { useAppSelector, useAppDispatch } from '../../hooks/';
-import { setFavorites, changeOffers } from '../../store/action';
+import { changeFavoriteAction } from '../../store/api-actions';
 
 type OfferCardProps = {
   offer: Offer;
   isNearPlace: boolean;
-  onOfferMouseOver?: FunctionNumber;
+  onOfferMouseOver?: (item: number) => void;
 }
 
 function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JSX.Element {
@@ -18,10 +18,11 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
   };
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.main.favorites);
+  // const authorizationStatus = useAppSelector((state) => state.main.authorizationStatus);
+  // const favorite = {offer, authorizationStatus};
+  //Как передать 2 компонента?
   const handleFavoriteClick = () => {
-    const newfavorites = (!offer.isFavorite) ? [offer, ...favorites] : favorites.filter((item) => item.id !== offer.id);
-    dispatch(setFavorites(newfavorites));
-    dispatch(changeOffers(offer));
+    dispatch(changeFavoriteAction(offer));
   };
   const isFavorites = favorites.some((favorite) => favorite.id === offer.id);
   return (

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
 import { CITIES } from '../../const';
-import { sortPriceLowToHigh, sortPriceHighToLow, sortRating, filterByCityName } from '../../utils';
-import { Offer, FunctionNumber, FunctionString } from '../../types/types';
+import { sortByPriceAsc, sortByPriceDesc, sortByRating, filterByCityName } from '../../utils';
+import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
 import Map from '../map/map';
@@ -17,7 +17,7 @@ type MainProps = {
 
 function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
   const [sortType, setSortType] = useState('Popular');
-  const handleSortClick: FunctionString = (sort) => {
+  const handleSortClick: (item: string) => void = (sort) => {
     setSortType(sort);
   };
   const dispatch = useAppDispatch();
@@ -26,15 +26,15 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
     const offersInOneCity = filterByCityName(accomadations, town);
     switch (sortType) {
       case 'PriceToHigh':
-        return offersInOneCity.sort(sortPriceLowToHigh);
+        return offersInOneCity.sort(sortByPriceAsc);
       case 'PriceToLow':
-        return offersInOneCity.sort(sortPriceHighToLow);
+        return offersInOneCity.sort(sortByPriceDesc);
       case 'Rated':
-        return offersInOneCity.sort(sortRating);
+        return offersInOneCity.sort(sortByRating);
     }
     return offersInOneCity;
   };
-  const handleOfferMouseOver: FunctionNumber = (offerId) => {
+  const handleOfferMouseOver:  (item: number) => void = (offerId) => {
     dispatch(getActiveOffer(offerId));
   };
   const activePoint = CITIES.find((item) => item.name === cityActive);
@@ -50,7 +50,7 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found"> {sortedOffers.length} places to stay in {town}</b>
-          <SortForm onSortClick={handleSortClick} />
+          <SortForm onSortClick={handleSortClick} sortType={sortType} />
           <div className="cities__places-list places__list tabs__content">
             {sortedOffers.slice(0, ITEMS_COUNT).map((offer) =>
               (<OfferCard offer={offer} isNearPlace={isNearPlace} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
