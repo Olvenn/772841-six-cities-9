@@ -7,20 +7,18 @@ import { changeFavoriteAction } from '../../store/api-actions';
 type OfferCardProps = {
   offer: Offer;
   isNearPlace: boolean;
-  onOfferMouseOver?: (item: number) => void;
+  onOfferMouseOver?: (item: Offer) => void;
 }
 
 function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JSX.Element {
   const handleMouseOver = () => {
     if (onOfferMouseOver) {
-      onOfferMouseOver(offer.id);
+      onOfferMouseOver(offer);
     }
   };
+
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.main.favorites);
-  // const authorizationStatus = useAppSelector((state) => state.main.authorizationStatus);
-  // const favorite = {offer, authorizationStatus};
-  //Как передать 2 компонента?
+  const favorites = useAppSelector((state) => state.INTERACTION.favorites);
   const handleFavoriteClick = () => {
     dispatch(changeFavoriteAction(offer));
   };
@@ -51,7 +49,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rating * 20}%` }}></span>
+            <span style={{ width: `${Math.floor(offer.rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

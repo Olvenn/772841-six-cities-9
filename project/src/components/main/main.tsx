@@ -6,7 +6,7 @@ import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
 import Map from '../map/map';
-import { getActiveOffer } from '../../store/action';
+import { getActiveOffer } from '../../store/offers/offers';
 
 const ITEMS_COUNT = 5;
 
@@ -21,7 +21,9 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
     setSortType(sort);
   };
   const dispatch = useAppDispatch();
-  const { town, offers, idActiveOffer } = useAppSelector((state) => state.main);
+  const town = useAppSelector((state) => state.OFFERS.town);
+  const activeOffer = useAppSelector((state) => state.OFFERS.activeOffer);
+  const offers = useAppSelector((state) => state.OFFERS.offers);
   const getOffers = (accomadations: Offer[]): Offer[] => {
     const offersInOneCity = filterByCityName(accomadations, town);
     switch (sortType) {
@@ -34,9 +36,10 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
     }
     return offersInOneCity;
   };
-  const handleOfferMouseOver:  (item: number) => void = (offerId) => {
-    dispatch(getActiveOffer(offerId));
+  const handleOfferMouseOver: (item: Offer) => void = (offer) => {
+    dispatch(getActiveOffer(offer));
   };
+
   const activePoint = CITIES.find((item) => item.name === cityActive);
   const sortedOffers = getOffers(offers);
 
@@ -56,9 +59,9 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
               (<OfferCard offer={offer} isNearPlace={isNearPlace} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
           </div>
         </section>
-        <section className="visually-hidden cities__map map">{idActiveOffer}</section>
+        <section className="visually-hidden cities__map map"></section>
         <div className="cities__right-section">
-          <Map activePoint={activePoint} offers={sortedOffers} offerActive={idActiveOffer} mapPlace={'main'} />
+          <Map activePoint={activePoint} offers={sortedOffers} offerActive={activeOffer} mapPlace={'main'} />
         </div>
       </div >
     </div >

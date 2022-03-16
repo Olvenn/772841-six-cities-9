@@ -5,7 +5,7 @@ type CommentCardProps = {
 }
 
 function CommentCard({ feedback }: CommentCardProps): JSX.Element {
-  const dateFormat = new Date('2022-01-13T12:59:09.591Z');
+  const dateFormat = new Date(feedback.date);
 
   return (
     <>

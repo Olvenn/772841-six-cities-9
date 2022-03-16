@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import {useAppDispatch} from '../../../hooks';
-import {FormEvent} from 'react';
-import {loginAction} from '../../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
+import { FormEvent } from 'react';
+import { loginAction } from '../../store/api-actions';
 import { useState } from 'react';
-import Logo from '../../logo/logo';
-import {AuthData} from '../../../types/auth-data';
+import Logo from '../logo/logo';
+import { AuthData } from '../../types/auth-data';
 
 
 function LoginPage(): JSX.Element {

@@ -14,6 +14,7 @@ export const errorHandle = (error: ErrorType): void => {
     store.dispatch(setError(message));
     store.dispatch(clearErrorAction());
   };
+
   const { response } = error;
 
   if (response) {

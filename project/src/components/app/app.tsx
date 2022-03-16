@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
-import MainPage from '../pages/main-page/main-page';
-import FavoritesPage from '../pages/favorites-page/favorites-page';
-import LoginPage from '../pages/login-page/login-page';
-import PropertyPage from '../pages/property-page/property-page';
+import MainPage from '../main-page/main-page';
+import FavoritesPage from '../favorites-page/favorites-page';
+import LoginPage from '../login-page/login-page';
+import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -18,7 +18,8 @@ type AppProps = {
 }
 
 function App({ cities, isNearPlace }: AppProps): JSX.Element {
-  const { authorizationStatus, isLoading } = useAppSelector((state) => state.main);
+  const isLoading = useAppSelector((state) => state.OFFERS.isLoading);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isLoading) {
     return (
