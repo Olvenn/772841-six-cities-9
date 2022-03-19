@@ -6,8 +6,8 @@ import { AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 
 function PageHeader(): JSX.Element {
-  const email = useAppSelector((state) => state.main.email);
-  const authorizationStatus = useAppSelector((state) => state.main.authorizationStatus);
+  const email = useAppSelector((state) => state.USER.email);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
   const handleClick = () => {
     store.dispatch(logoutAction());
   };

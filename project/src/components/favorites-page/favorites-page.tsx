@@ -1,11 +1,11 @@
-import PageHeader from '../../page-header/page-header';
-import PageFooter from '../../page-footer/page-footer';
-import FavoriteCard from '../../favorite-card/favorite-card';
+import PageHeader from '../page-header/page-header';
+import PageFooter from '../page-footer/page-footer';
+import FavoriteCard from '../favorite-card/favorite-card';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/';
+import { useAppSelector } from '../../hooks/';
 
 function FavoritesPage(): JSX.Element {
-  const favorites = useAppSelector((state) => state.main.favorites);
+  const favorites = useAppSelector((state) => state.INTERACTION.favorites);
   const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (
@@ -13,7 +13,7 @@ function FavoritesPage(): JSX.Element {
       <PageHeader />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {favorites.length? (
+          {favorites.length ? (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">

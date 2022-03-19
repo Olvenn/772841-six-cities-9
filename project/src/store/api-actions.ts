@@ -1,14 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../store';
 import { store } from '../store';
-import { Offer } from '../types/types';
-import { loadOffers, requireAuthorization, setError, getEmail, redirectToRoute, loadFavorites, changeFavorite, changeOffers } from './action';
+import { Offer, Comment } from '../types/types';
+import { setError, redirectToRoute } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, AppRoute } from '../const';
 import { errorHandle } from '../services/error-handle';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-//      errorHandle(error); - самописная функция
+import { CommentData } from '../types/comment-data';
+import { requireAuthorization, getEmail } from './user/user';
+import { loadFavorites, changeFavorite, setComments, setIsLoading } from './interaction/interaction';
+import { loadOffers, logoutOffers, loadOffersNearby } from './offers/offers';
+import { changeOffers } from './offers/offers';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -30,6 +34,33 @@ export const fetchOffersAction = createAsyncThunk(
     }
   },
 );
+export const fetchCommentsAction = createAsyncThunk(
+  'data/fetchComments',
+  async (id: number) => {
+    try {
+      const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(setComments(data));
+      store.dispatch(setIsLoading(false));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+export const commentAction = createAsyncThunk(
+  'user/comment',
+  async ({ offerId, rating, comment }: CommentData) => {
+    try {
+      const { data } = await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, { rating, comment });
+      store.dispatch(setIsLoading(true));
+      await store.dispatch(setComments(data));
+      store.dispatch(setIsLoading(false));
+
+    } catch (error) {
+      store.dispatch(setIsLoading(false));
+      errorHandle(error);
+    }
+  },
+);
 export const fetchFavoritesAction = createAsyncThunk(
   'data/fetchFavorites',
   async () => {
@@ -42,8 +73,7 @@ export const fetchFavoritesAction = createAsyncThunk(
   },
 );
 export const changeFavoriteAction = createAsyncThunk(
-  'user/changeFavorites',
-
+  'user/changeFavorite',
   async (offer: Offer) => {
     try {
       const status = Number(!offer.isFavorite);
@@ -51,25 +81,22 @@ export const changeFavoriteAction = createAsyncThunk(
       store.dispatch(changeFavorite(data));
       store.dispatch(changeOffers(data));
     } catch (error) {
+      store.dispatch(redirectToRoute(AppRoute.Login));
       errorHandle(error);
     }
   },
 );
-// export const changeFavoriteAction = createAsyncThunk(
-//   'user/changeFavorites',
-//   async (favorite: Favorite) => {
-//     const {offer, authorizationStatus} = favorite;
-//     try {
-//       if(authorizationStatus !== AuthorizationStatus.Auth) {
-//         return;
-//       }
-//       const status = Number(!offer.isFavorite);
-//       const {data} = await api.post<Offer>(`${APIRoute.Favorites}/${offer.id}/${status}`);
-//     } catch (error) {
-//       errorHandle(error);
-//     }
-//   },
-// );
+export const fetchNearbyAction = createAsyncThunk(
+  'user/ fetchNearby',
+  async (id: number) => {
+    try {
+      const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}${APIRoute.OffersNearby}`);
+      store.dispatch(loadOffersNearby(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -105,6 +132,8 @@ export const logoutAction = createAsyncThunk(
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
       store.dispatch(getEmail(''));
+      store.dispatch(loadFavorites([]));
+      store.dispatch(logoutOffers());
     } catch (error) {
       errorHandle(error);
     }

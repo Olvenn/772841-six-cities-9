@@ -1,17 +1,19 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks/';
-import PageHeader from '../../page-header/page-header';
-import Main from '../../main/main';
-import MainEmpty from '../../main-empty/main-empty';
-import CitiesList from '../../cities-list/cities-list';
-import { changeCity, getActiveOffer } from '../../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks/';
+import PageHeader from '../page-header/page-header';
+import Main from '../main/main';
+import MainEmpty from '../main-empty/main-empty';
+import CitiesList from '../cities-list/cities-list';
+import { getActiveOffer } from '../../store/offers/offers';
+import { changeCity } from '../../store/offers/offers';
 
 type MainPageProps = {
-  cities: {[index: string]: string};
+  cities: { [index: string]: string };
   isNearPlace: boolean;
 }
 
 function MainPage({ cities, isNearPlace }: MainPageProps): JSX.Element {
-  const { offers, town } = useAppSelector((state) => state.main);
+  const offers = useAppSelector((state) => state.OFFERS.offers);
+  const town = useAppSelector((state) => state.OFFERS.town);
   const dispatch = useAppDispatch();
   const handleCityClick: (item: string) => void = (city: string) => {
     dispatch(getActiveOffer(-1));
@@ -20,7 +22,7 @@ function MainPage({ cities, isNearPlace }: MainPageProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      { <PageHeader /> }
+      {<PageHeader />}
       <main className={`${offers ? 'page__main page__main--index' : 'page__main page__main--index page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

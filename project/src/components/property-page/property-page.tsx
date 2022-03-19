@@ -1,16 +1,16 @@
-import PageHeader from '../../page-header/page-header';
-import CommentCard from '../../comment-card/comment-card';
-import { reviews } from '../../../mock/mock';
-import CommentForm from '../../comment-form/comment-form';
-import { firstToUpperCase } from '../../../utils';
-import OfferCard from '../../offer-card/offer-card';
+import PageHeader from '../page-header/page-header';
+import CommentForm from '../comment-form/comment-form';
+import Comments from '../comments/comments';
+import Nearby from '../nearby/nearby';
+import { firstToUpperCase } from '../../utils';
 import { useParams } from 'react-router-dom';
-import Map from '../../map/map';
-import { useAppSelector, useAppDispatch } from '../../../hooks/';
-import { changeFavoriteAction } from '../../../store/api-actions';
+import Map from '../map/map';
+import { useAppSelector, useAppDispatch } from '../../hooks/';
+import { changeFavoriteAction } from '../../store/api-actions';
+import { fetchNearbyAction, fetchCommentsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
 
 const IMAGES_COUNT = 6;
-const NEAR_COUNT = 3;
 
 type PageHeaderProps = {
   isNearPlace: boolean;
@@ -18,14 +18,21 @@ type PageHeaderProps = {
 
 function PropertyPage({ isNearPlace }: PageHeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.main.offers);
-  //Делают ли так в реальном проекте?
-  const { id } = useParams<{ id: string }>();
-  const offer = offers.find((item) => String(item.id) === id?.slice(1));
+  const offers = useAppSelector((state) => state.OFFERS.offers);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
+  const { id } = useParams<{ id: string }>();
+  if (!id) {
+    return <div>Not found</div>;
+  }
+
+  const offer = offers.find((item) => item.id === +id?.slice(1));
   if (!offer) {
     return <div>Not found</div>;
   }
+
+  dispatch(fetchNearbyAction(offer.id));
+  dispatch(fetchCommentsAction(offer.id));
 
   const handleFavoriteClick = () => {
     dispatch(changeFavoriteAction(offer));
@@ -63,10 +70,10 @@ function PropertyPage({ isNearPlace }: PageHeaderProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${offer.rating * 20}%` }}></span>
+                  <span style={{ width: `${Math.round(offer.rating) * 20}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
@@ -112,25 +119,17 @@ function PropertyPage({ isNearPlace }: PageHeaderProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  {reviews.map((review) => <li className="reviews__item" key={review.id}><CommentCard feedback={review} /></li>)}
-                </ul>
-                <CommentForm />
+                <Comments />
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm offerId={offer.id} /> : ''}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map activePoint={offer.city} offers={offers} offerActive={offer.id} mapPlace={'property'} />
+            <Map activePoint={offer.city} offers={[]} offerActive={offer} mapPlace={'property'} />
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="cities__places-list places__list tabs__content">
-              {offers.slice(0, NEAR_COUNT).map((offerNearby) => (<OfferCard offer={offerNearby} isNearPlace={isNearPlace} key={offerNearby.id} />))}
-            </div>
-          </section>
+          <Nearby isNearPlace={isNearPlace} />
         </div>
       </main>
     </div >

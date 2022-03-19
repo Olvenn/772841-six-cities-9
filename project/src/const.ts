@@ -2,8 +2,11 @@ import { City } from './types/types';
 
 export const ACTIVE_TOWN = 'Paris';
 export const ZOOM = 12;
+export const MAX_COMMENTS = 10;
+export const MAX_LENGTH = 300;
+export const MIN_LENGTH = 50;
 
-export const SortTypes: {[index: string]: string} = {
+export const SortTypes: { [index: string]: string } = {
   'Popular': 'Popular',
   'PriceToHigh': 'Price: low to high',
   'PriceToLow': 'Price: high to low',
@@ -18,7 +21,7 @@ export const SortTypes: {[index: string]: string} = {
 //   Rated = 'Top rated first',
 // }
 
-export const cities: {[index: string]: string} = {
+export const cities: { [index: string]: string } = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -109,14 +112,20 @@ export enum APIRoute {
   Offers = '/hotels',
   OffersNearby = '/nearby',
   Favorites = '/favorite',
-  Comments = '/comments/',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }
-///hotels/{hotelId}/nearby,  get /hotels/{hotelId},  post /favorite/{hotelId}/{status}
 
 export enum HTTP_CODE {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
+}
+
+export enum NameSpace {
+  offers = 'OFFERS',
+  favorites = 'FAVORITES',
+  interaction = 'INTERACTION',
+  user = 'USER',
 }
