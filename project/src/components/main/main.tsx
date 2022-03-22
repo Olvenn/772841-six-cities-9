@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
-import { CITIES } from '../../const';
-import { sortByPriceAsc, sortByPriceDesc, sortByRating, filterByCityName } from '../../utils';
+import { CITIES, NameSpace, SortTypes } from '../../const';
+import { filterByCityName, sortings } from '../../utils';
 import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
 import Map from '../map/map';
-import { getActiveOffer } from '../../store/offers/offers';
+import { getActiveOffer } from '../../store/reducers/offers';
 
 const ITEMS_COUNT = 5;
 
@@ -16,32 +16,25 @@ type MainProps = {
 }
 
 function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
-  const [sortType, setSortType] = useState('Popular');
-  const handleSortClick: (item: string) => void = (sort) => {
+  const [sortType, setSortType] = useState(SortTypes.Default);
+
+  const handleSortClick: (sort: SortTypes) => void = useCallback((sort) => {
     setSortType(sort);
-  };
+  }, []);
+
   const dispatch = useAppDispatch();
-  const town = useAppSelector((state) => state.OFFERS.town);
-  const activeOffer = useAppSelector((state) => state.OFFERS.activeOffer);
-  const offers = useAppSelector((state) => state.OFFERS.offers);
-  const getOffers = (accomadations: Offer[]): Offer[] => {
-    const offersInOneCity = filterByCityName(accomadations, town);
-    switch (sortType) {
-      case 'PriceToHigh':
-        return offersInOneCity.sort(sortByPriceAsc);
-      case 'PriceToLow':
-        return offersInOneCity.sort(sortByPriceDesc);
-      case 'Rated':
-        return offersInOneCity.sort(sortByRating);
-    }
-    return offersInOneCity;
-  };
-  const handleOfferMouseOver: (item: Offer) => void = (offer) => {
+  const activeOffer = useAppSelector((state) => state[NameSpace.offers].activeOffer);
+
+  const town = useAppSelector((state) => state[NameSpace.offers].town);
+  const rawOffers = useAppSelector((state) => state[NameSpace.offers].offers);
+  const cityOffers = filterByCityName(rawOffers, town);
+  const sortedOffers = sortings[sortType](cityOffers);
+
+  const handleOfferMouseOver: (item: Offer) => void = useCallback((offer) => {
     dispatch(getActiveOffer(offer));
-  };
+  }, [dispatch]);
 
   const activePoint = CITIES.find((item) => item.name === cityActive);
-  const sortedOffers = getOffers(offers);
 
   if (!activePoint) {
     return <div>No city</div>;
@@ -55,8 +48,13 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
           <b className="places__found"> {sortedOffers.length} places to stay in {town}</b>
           <SortForm onSortClick={handleSortClick} sortType={sortType} />
           <div className="cities__places-list places__list tabs__content">
-            {sortedOffers.slice(0, ITEMS_COUNT).map((offer) =>
-              (<OfferCard offer={offer} isNearPlace={isNearPlace} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
+            {sortedOffers.slice(0, ITEMS_COUNT).map((offer) => (
+              <OfferCard
+                offer={offer}
+                isNearPlace={isNearPlace}
+                onOfferMouseOver={handleOfferMouseOver}
+                key={offer.id}
+              />))}
           </div>
         </section>
         <section className="visually-hidden cities__map map"></section>

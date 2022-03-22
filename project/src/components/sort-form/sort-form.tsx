@@ -1,11 +1,19 @@
 import { useState } from 'react';
+// import { sortingLabels } from '../../const';
 import { SortTypes } from '../../const';
 import SortOption from '../sort-options/sort-options';
 
 type SortFormProps = {
-  onSortClick: (item: string) => void;
-  sortType: string;
+  onSortClick: (item: SortTypes) => void;
+  sortType: SortTypes;
 }
+
+export const sortingLabels: Record<SortTypes, string> = {
+  [SortTypes.Default]: 'Popular',
+  [SortTypes.PriceLowToHigh]: 'Price: low to high',
+  [SortTypes.PriceHighToLow]: 'Price: high to low',
+  [SortTypes.Rating]: 'Top rated first',
+};
 
 function SortForm({ onSortClick, sortType }: SortFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -17,18 +25,18 @@ function SortForm({ onSortClick, sortType }: SortFormProps): JSX.Element {
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span onClick={handleIsOpenClick} className="places__sorting-type" tabIndex={0}>
-        {SortTypes[sortType]}
+        {sortingLabels[sortType]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
-        {(Object.entries(SortTypes)).map(([key, option]) => (
+        {(Object.entries(sortingLabels)).map(([value, label]) => (
           <SortOption
             onSortClick={onSortClick}
-            key={key}
-            keyOption={key}
-            option={option}
+            key={value}
+            value={value as SortTypes}
+            label={label}
             optionActive={sortType}
           />
         ))}

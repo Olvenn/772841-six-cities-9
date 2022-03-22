@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { AppRoute } from '../../const';
+import { AppRoute, NameSpace } from '../../const';
 import MainPage from '../main-page/main-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
@@ -18,7 +18,7 @@ type AppProps = {
 }
 
 function App({ cities, isNearPlace }: AppProps): JSX.Element {
-  const isLoading = useAppSelector((state) => state.OFFERS.isLoading);
+  const isLoading = useAppSelector((state) => state[NameSpace.offers].isLoading);
   const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isLoading) {

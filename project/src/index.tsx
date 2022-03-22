@@ -12,9 +12,6 @@ const Setting = {
   IS_NEAR_PLACE: false,
 };
 
-// eslint-disable-next-line no-console
-// console.log(offers);
-
 store.dispatch(fetchOffersAction());
 store.dispatch(fetchFavoritesAction());
 store.dispatch(checkAuthAction());

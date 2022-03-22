@@ -11,7 +11,5 @@ export const redirect: Middleware<unknown, Reducer> =
         if (action.type === 'game/redirectToRoute') {
           browserHistory.push(action.payload);
         }
-
         return next(action);
       };
-//Middleware нужна для того, чтобы в browserHistory передавать путь по которому перешли

@@ -6,20 +6,19 @@ export const MAX_COMMENTS = 10;
 export const MAX_LENGTH = 300;
 export const MIN_LENGTH = 50;
 
-export const SortTypes: { [index: string]: string } = {
-  'Popular': 'Popular',
-  'PriceToHigh': 'Price: low to high',
-  'PriceToLow': 'Price: high to low',
-  'Rated': 'Top rated first',
-};
+// export const sortingLabels: { [index: string]: string } = {
+//   'Popular': 'Popular',
+//   'PriceToHigh': 'Price: low to high',
+//   'PriceToLow': 'Price: high to low',
+//   'Rated': 'Top rated first',
+// };
 
-//В чем разница
-// export enum SortTypes {
-//   Popular = 'Popular',
-//   PriceToHigh = 'Price: low to high',
-//   PriceToLow = 'Price: high to low',
-//   Rated = 'Top rated first',
-// }
+export enum SortTypes {
+  Default = 'Popular',
+  PriceLowToHigh = 'PriceLowToHigh',
+  PriceHighToLow = 'PriceHighToLow',
+  Rating = 'Rating',
+}
 
 export const cities: { [index: string]: string } = {
   Paris: 'Paris',
@@ -126,6 +125,7 @@ export enum HTTP_CODE {
 export enum NameSpace {
   offers = 'OFFERS',
   favorites = 'FAVORITES',
-  interaction = 'INTERACTION',
+  comments = 'COMMENTS',
   user = 'USER',
+  main = 'MAIN',
 }

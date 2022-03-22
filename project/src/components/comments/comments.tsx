@@ -4,7 +4,7 @@ import { MAX_COMMENTS } from '../../const';
 import { sortByDayAsc } from '../../utils';
 
 function Comments(): JSX.Element {
-  const comments = useAppSelector((state) => state.INTERACTION.comments);
+  const comments = useAppSelector((state) => state.COMMENTS.comments);
 
   return (
     <div>
@@ -19,5 +19,4 @@ function Comments(): JSX.Element {
     </div>
   );
 }
-
 export default Comments;

@@ -19,10 +19,11 @@ export type OffersProcess = {
   offersNearby: Offer[],
 };
 
-export type Interaction = {
+export type FAVORITES = {
   favorites: Offer[],
+};
+
+export type COMMENTS = {
   comments: Comment[],
   isLoading: boolean,
 };
-
-

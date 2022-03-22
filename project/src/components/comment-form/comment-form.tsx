@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { commentAction } from '../../store/api-actions';
-import { ratings, MAX_LENGTH, MIN_LENGTH } from '../../const';
+import { ratings, MAX_LENGTH, MIN_LENGTH, NameSpace } from '../../const';
 import { CommentData } from '../../types/comment-data';
 
 type CommentFormProps = {
@@ -12,7 +12,7 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const isLoading = useAppSelector((stata) => stata.INTERACTION.isLoading);
+  const isLoading = useAppSelector((state) => state[NameSpace.comments].isLoading);
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(+evt.target.value);

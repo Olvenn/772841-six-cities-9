@@ -3,6 +3,7 @@ import { firstToUpperCase } from '../../utils';
 import { Offer } from '../../types/types';
 import { useAppSelector, useAppDispatch } from '../../hooks/';
 import { changeFavoriteAction } from '../../store/api-actions';
+import { NameSpace } from '../../const';
 
 type OfferCardProps = {
   offer: Offer;
@@ -18,7 +19,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
   };
 
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.INTERACTION.favorites);
+  const favorites = useAppSelector((state) => state[NameSpace.favorites].favorites);
   const handleFavoriteClick = () => {
     dispatch(changeFavoriteAction(offer));
   };

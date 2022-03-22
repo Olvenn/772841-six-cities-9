@@ -8,7 +8,7 @@ import Map from '../map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks/';
 import { changeFavoriteAction } from '../../store/api-actions';
 import { fetchNearbyAction, fetchCommentsAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, NameSpace } from '../../const';
 
 const IMAGES_COUNT = 6;
 
@@ -18,8 +18,8 @@ type PageHeaderProps = {
 
 function PropertyPage({ isNearPlace }: PageHeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.OFFERS.offers);
-  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
+  const offers = useAppSelector((state) => state[NameSpace.offers].offers);
+  const authorizationStatus = useAppSelector((state) => state[NameSpace.user].authorizationStatus);
 
   const { id } = useParams<{ id: string }>();
   if (!id) {

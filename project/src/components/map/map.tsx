@@ -4,8 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { City, Offer } from '../../types/types';
 import useMap from './useMap';
-import { URL_MARKER, URL_MARKER_ACTIVE } from '../../const';
+import { NameSpace, URL_MARKER, URL_MARKER_ACTIVE } from '../../const';
 import { useAppSelector } from '../../hooks/';
+// import Nearby from '../nearby/nearby';
 
 export type MapProps = {
   activePoint: City;
@@ -28,7 +29,7 @@ const offerActiveIcon = leaflet.icon({
 function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, activePoint);
-  const offersNearby = useAppSelector((state) => state.OFFERS.offersNearby);
+  const offersNearby = useAppSelector((state) => state[NameSpace.offers].offersNearby);
 
   if (mapPlace === 'property' && offerActive) {
     offers = [...offersNearby, offerActive];

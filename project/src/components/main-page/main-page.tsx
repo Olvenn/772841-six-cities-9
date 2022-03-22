@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/';
+import { useCallback } from 'react';
 import PageHeader from '../page-header/page-header';
 import Main from '../main/main';
 import MainEmpty from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
-import { getActiveOffer } from '../../store/offers/offers';
-import { changeCity } from '../../store/offers/offers';
+import { getActiveOffer } from '../../store/reducers/offers';
+import { changeCity } from '../../store/reducers/offers';
+import { NameSpace } from '../../const';
 
 type MainPageProps = {
   cities: { [index: string]: string };
@@ -12,13 +14,14 @@ type MainPageProps = {
 }
 
 function MainPage({ cities, isNearPlace }: MainPageProps): JSX.Element {
-  const offers = useAppSelector((state) => state.OFFERS.offers);
-  const town = useAppSelector((state) => state.OFFERS.town);
+  const offers = useAppSelector((state) => state[NameSpace.offers].offers);
+  const town = useAppSelector((state) => state[NameSpace.offers].town);
   const dispatch = useAppDispatch();
-  const handleCityClick: (item: string) => void = (city: string) => {
+
+  const handleCityClick: (item: string) => void = useCallback((city: string) => {
     dispatch(getActiveOffer(-1));
     dispatch(changeCity(city));
-  };
+  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">
