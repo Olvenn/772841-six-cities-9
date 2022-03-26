@@ -4,6 +4,8 @@ import { commentAction } from '../../store/api-actions';
 import { ratings, MAX_LENGTH, MIN_LENGTH, NameSpace } from '../../const';
 import { CommentData } from '../../types/comment-data';
 
+const MAX_RATING = 5;
+
 type CommentFormProps = {
   offerId: number;
 }
@@ -20,11 +22,9 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
   const handleTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
   };
-
   const onSubmit = (commentData: CommentData) => {
     dispatch(commentAction(commentData));
   };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -44,7 +44,7 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
         <div className="reviews__rating-form form__rating">
           {ratings.map((title, index) => (
             <React.Fragment key={title.id} >
-              <input onChange={handleRatingChange} checked={+rating === (5 - index)} className="form__rating-input visually-hidden" name="rating" value={5 - index} id={title.id} type="radio" />
+              <input onChange={handleRatingChange} checked={+rating === (MAX_RATING - index)} className="form__rating-input visually-hidden" name="rating" value={MAX_RATING - index} id={title.id} type="radio" />
               <label htmlFor={title.id} className="reviews__rating-label form__rating-label" title={title.name}>
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star" />

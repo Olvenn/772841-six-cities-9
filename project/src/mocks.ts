@@ -10,6 +10,11 @@ export const MIN_ID = 100;
 const MIN_PRICE = 100;
 const MAX_PRICE = 1000;
 
+export const ALLOFFERS = 25;
+export const NEARBY = 3;
+export const COMMENTS = 4;
+export const FAVORITES = 7;
+
 export const makeFakeUser = (): PersonData => ({
   avatarUrl: internet.avatar(),
   id: datatype.number(),

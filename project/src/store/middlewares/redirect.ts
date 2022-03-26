@@ -11,5 +11,6 @@ export const redirect: Middleware<unknown, Reducer> =
         if (action.type === 'game/redirectToRoute') {
           browserHistory.push(action.payload);
         }
+
         return next(action);
       };

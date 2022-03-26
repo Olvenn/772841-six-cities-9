@@ -6,7 +6,6 @@ import { City, Offer } from '../../types/types';
 import useMap from './useMap';
 import { NameSpace, URL_MARKER, URL_MARKER_ACTIVE } from '../../const';
 import { useAppSelector } from '../../hooks/';
-// import Nearby from '../nearby/nearby';
 
 export type MapProps = {
   activePoint: City;

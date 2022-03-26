@@ -23,4 +23,5 @@ export const sortings = {
 
 export const filterByCityName = (offers: Offer[], cityName: string) => [...offers].filter((offer: Offer) => offer.city.name === cityName);
 
+
 export const sortByDayAsc = (a: Comment, b: Comment) => ((Date.parse(b.date)) - (Date.parse(a.date)));

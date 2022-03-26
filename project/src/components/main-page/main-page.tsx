@@ -6,14 +6,9 @@ import MainEmpty from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
 import { getActiveOffer } from '../../store/reducers/offers';
 import { changeCity } from '../../store/reducers/offers';
-import { NameSpace } from '../../const';
+import { NameSpace, cities } from '../../const';
 
-type MainPageProps = {
-  cities: { [index: string]: string };
-  isNearPlace: boolean;
-}
-
-function MainPage({ cities, isNearPlace }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state[NameSpace.offers].offers);
   const town = useAppSelector((state) => state[NameSpace.offers].town);
   const dispatch = useAppDispatch();
@@ -42,7 +37,7 @@ function MainPage({ cities, isNearPlace }: MainPageProps): JSX.Element {
             </ul>
           </section>
         </div>
-        {offers.length ? <Main isNearPlace={isNearPlace} cityActive={town} /> : <MainEmpty />}
+        {offers.length ? <Main cityActive={town} /> : <MainEmpty />}
       </main>
     </div>
   );

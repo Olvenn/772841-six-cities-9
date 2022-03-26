@@ -11,11 +11,10 @@ import { getActiveOffer } from '../../store/reducers/offers';
 const ITEMS_COUNT = 5;
 
 type MainProps = {
-  isNearPlace: boolean;
   cityActive: string;
 }
 
-function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
+function Main({ cityActive }: MainProps): JSX.Element {
   const [sortType, setSortType] = useState(SortTypes.Default);
 
   const handleSortClick: (sort: SortTypes) => void = useCallback((sort) => {
@@ -35,6 +34,7 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
   }, [dispatch]);
 
   const activePoint = CITIES.find((item) => item.name === cityActive);
+  const isNearPlace = true;
 
   if (!activePoint) {
     return <div>No city</div>;
@@ -48,13 +48,8 @@ function Main({ isNearPlace, cityActive }: MainProps): JSX.Element {
           <b className="places__found"> {sortedOffers.length} places to stay in {town}</b>
           <SortForm onSortClick={handleSortClick} sortType={sortType} />
           <div className="cities__places-list places__list tabs__content">
-            {sortedOffers.slice(0, ITEMS_COUNT).map((offer) => (
-              <OfferCard
-                offer={offer}
-                isNearPlace={isNearPlace}
-                onOfferMouseOver={handleOfferMouseOver}
-                key={offer.id}
-              />))}
+            {sortedOffers.slice(0, ITEMS_COUNT).map((offer) =>
+              (<OfferCard offer={offer} isNearPlace={isNearPlace} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
           </div>
         </section>
         <section className="visually-hidden cities__map map"></section>

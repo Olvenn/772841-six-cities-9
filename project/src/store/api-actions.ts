@@ -155,6 +155,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       handleError(error);
+      //сразу dispatch, что не ваторизованы
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },

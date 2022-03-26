@@ -3,14 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import App from './components/app/app';
-import { cities } from './const';
+import HistoryRouter from '../src/components/history-route/history-route';
+import browserHistory from './browser-history';
 import ErrorMessage from './components/error-message/error-message';
 import { checkAuthAction, fetchOffersAction, fetchFavoritesAction } from './store/api-actions';
-
-const Setting = {
-  CITY: cities,
-  IS_NEAR_PLACE: false,
-};
 
 store.dispatch(fetchOffersAction());
 store.dispatch(fetchFavoritesAction());
@@ -20,10 +16,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App
-        cities={Setting.CITY}
-        isNearPlace={Setting.IS_NEAR_PLACE}
-      />
+      <HistoryRouter history={browserHistory}>
+        <App />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

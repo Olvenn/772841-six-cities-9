@@ -30,7 +30,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className={`${!isNearPlace ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
+      <div className={`${isNearPlace ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
         <Link to={`/offer/:${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place images" />
         </Link>

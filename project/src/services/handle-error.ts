@@ -5,6 +5,7 @@ import { clearErrorAction } from '../store/api-actions';
 import { ErrorType } from '../types/types';
 import { HTTP_CODE } from '../const';
 
+//Если это ошибка Axios, то мы не будем ее обрабатывать, так как не знаем, что случилось и просто прокинем ее дальше
 export const handleError = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
     throw error;

@@ -8,16 +8,9 @@ import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
-import HistoryRouter from '../history-route/history-route';
 import { isCheckedAuth } from '../../main';
-import browserHistory from '../../browser-history';
 
-type AppProps = {
-  cities: { [index: string]: string };
-  isNearPlace: boolean;
-}
-
-function App({ cities, isNearPlace }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const isLoading = useAppSelector((state) => state[NameSpace.offers].isLoading);
   const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
@@ -28,34 +21,32 @@ function App({ cities, isNearPlace }: AppProps): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<MainPage cities={cities} isNearPlace={isNearPlace} />}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
-              <FavoritesPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginPage />}
-        />
-        <Route
-          path={AppRoute.Property}
-          element={<PropertyPage isNearPlace={isNearPlace} />}
-        />
-        <Route
-          path="*"
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </HistoryRouter>
+    <Routes>
+      <Route
+        path={AppRoute.Root}
+        element={<MainPage />}
+      />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <FavoritesPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={<LoginPage />}
+      />
+      <Route
+        path={AppRoute.Property}
+        element={<PropertyPage />}
+      />
+      <Route
+        path="*"
+        element={<NotFoundPage />}
+      />
+    </Routes>
   );
 }
 export default App;
