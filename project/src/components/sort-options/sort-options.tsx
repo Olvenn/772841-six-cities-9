@@ -1,17 +1,19 @@
+import { SortTypes } from '../../const';
+
 type SortOptionProps = {
   optionActive: string;
-  keyOption: string;
-  option: string;
-  onSortClick: (item: string) => void;
+  value: SortTypes;
+  label: string;
+  onSortClick: (item: SortTypes) => void;
 }
 
-function SortOption({ option, optionActive, keyOption, onSortClick }: SortOptionProps): JSX.Element {
+function SortOption({label, optionActive, value, onSortClick }: SortOptionProps): JSX.Element {
   const handleClick = () => {
-    onSortClick(keyOption);
+    onSortClick(value);
   };
 
   return (
-    <li onClick={handleClick} className={`places__option ${optionActive === keyOption ? 'places__option--active' : ''}`} tabIndex={0}>{option}</li>
+    <li onClick={handleClick} className={`places__option ${optionActive === value ? 'places__option--active' : ''}`} tabIndex={0}>{label}</li>
   );
 }
 export default SortOption;

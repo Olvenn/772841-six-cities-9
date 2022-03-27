@@ -5,12 +5,13 @@ import { clearErrorAction } from '../store/api-actions';
 import { ErrorType } from '../types/types';
 import { HTTP_CODE } from '../const';
 
-export const errorHandle = (error: ErrorType): void => {
+//Если это ошибка Axios, то мы не будем ее обрабатывать, так как не знаем, что случилось и просто прокинем ее дальше
+export const handleError = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
     throw error;
   }
 
-  const handleError = (message: string) => {
+  const dispatchError = (message: string) => {
     store.dispatch(setError(message));
     store.dispatch(clearErrorAction());
   };
@@ -20,13 +21,13 @@ export const errorHandle = (error: ErrorType): void => {
   if (response) {
     switch (response.status) {
       case HTTP_CODE.BAD_REQUEST:
-        handleError(response.data.error);
+        dispatchError(response.data.error);
         break;
       case HTTP_CODE.UNAUTHORIZED:
-        handleError(response.data.error);
+        dispatchError(response.data.error);
         break;
       case HTTP_CODE.NOT_FOUND:
-        handleError(response.data.error);
+        dispatchError(response.data.error);
         break;
     }
   }

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setError } from './action';
+import { setError } from '../action';
 
 type InitalState = {
   error: string,

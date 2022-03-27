@@ -14,4 +14,3 @@ export const redirect: Middleware<unknown, Reducer> =
 
         return next(action);
       };
-//Middleware нужна для того, чтобы в browserHistory передавать путь по которому перешли

@@ -1,12 +1,11 @@
+import { NameSpace } from '../../const';
 import { useAppSelector } from '../../hooks/';
 import OfferCard from '../offer-card/offer-card';
 
-type NearbyProps = {
-  isNearPlace: boolean;
-}
-function Nearby({ isNearPlace }: NearbyProps): JSX.Element {
-  const offersNearby = useAppSelector((state) => state.OFFERS.offersNearby);
 
+function Nearby(): JSX.Element {
+  const offersNearby = useAppSelector((state) => state[NameSpace.offers].offersNearby);
+  const isNearPlace = false;
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
