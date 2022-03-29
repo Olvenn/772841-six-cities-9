@@ -19,6 +19,7 @@ const offerIcon = leaflet.icon({
   iconSize: [27, 39],
   iconAnchor: [13.5, 20],
 });
+
 const offerActiveIcon = leaflet.icon({
   iconUrl: URL_MARKER_ACTIVE,
   iconSize: [27, 39],
@@ -56,7 +57,7 @@ function Map({ activePoint, offers, offerActive, mapPlace }: MapProps): JSX.Elem
   }, [map, offers, offerActive, layerGroup]);
 
   return (
-    <section className={`${mapPlace === 'main' ? 'cities__map map' : 'property__map map'}`} ref={mapRef}></section>
+    <section data-testid="Map" className={`${mapPlace === 'main' ? 'cities__map map' : 'property__map map'}`} ref={mapRef}></section>
   );
 }
 export default Map;

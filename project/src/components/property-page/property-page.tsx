@@ -9,8 +9,17 @@ import { useAppSelector, useAppDispatch } from '../../hooks/';
 import { changeFavoriteAction } from '../../store/api-actions';
 import { fetchNearbyAction, fetchCommentsAction } from '../../store/api-actions';
 import { AuthorizationStatus, NameSpace } from '../../const';
+import MainPage from '../main-page/main-page';
+import { store } from '../../store';
+import { setError } from '../../store/action';
+import { clearErrorAction } from '../../store/api-actions';
 
 const IMAGES_COUNT = 6;
+
+const dispatchError = (message: string) => {
+  store.dispatch(setError(message));
+  store.dispatch(clearErrorAction());
+};
 
 function PropertyPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,12 +28,18 @@ function PropertyPage(): JSX.Element {
 
   const { id } = useParams<{ id: string }>();
   if (!id) {
-    return <div>Id not found</div>;
+    if (offers.length > 0) {
+      dispatchError('Offer not found');
+    }
+    return <MainPage />;
   }
 
-  const offer = offers.find((item) => item.id === +id?.slice(1));
+  const offer = offers.find((item) => item.id === +id);
   if (!offer) {
-    return <div>Not found offer</div>;
+    if (offers.length > 0) {
+      dispatchError('Offer not found');
+    }
+    return <MainPage />;
   }
 
   dispatch(fetchNearbyAction(offer.id));

@@ -1,33 +1,31 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import { Provider } from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
-import { AppRoute } from '../../const';
-import Nearby from './nearby';
 import { NameSpace } from '../../const';
+import { AppRoute } from '../../const';
+import ErrorMessage from './error-message';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
-history.push(AppRoute.Property);
+history.push(AppRoute.Root);
 
 const store = mockStore({
-  [NameSpace.offers]: {
-    offersNearby: [],
-  },
+  [NameSpace.main]: { error: 'Not found' },
 });
 
-describe('Component: Nearby', () => {
-  it('should render correctly offersNearby', () => {
+describe('Component: ErrorMessage', () => {
+  it('should render correctly', () => {
 
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Nearby />
-        </HistoryRouter>,
+          <ErrorMessage />
+        </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+    expect(screen.getByText('Not found')).toBeInTheDocument();
   });
 });

@@ -1,33 +1,34 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import Comments from './comments';
 import { AppRoute } from '../../const';
-import Nearby from './nearby';
 import { NameSpace } from '../../const';
+import { makeFakeComments, COMMENTS } from '../../mocks';
+import { Provider } from 'react-redux';
 
 const mockStore = configureMockStore();
+const comments = makeFakeComments(COMMENTS);
 const history = createMemoryHistory();
 history.push(AppRoute.Property);
 
 const store = mockStore({
-  [NameSpace.offers]: {
-    offersNearby: [],
+  [NameSpace.comments]: {
+    comments: comments,
+    isLoading: true,
   },
 });
 
-describe('Component: Nearby', () => {
-  it('should render correctly offersNearby', () => {
-
+describe('Component: Comments', () => {
+  it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Nearby />
-        </HistoryRouter>,
+          <Comments />
+        </HistoryRouter>);
       </Provider>,
     );
-
-    expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
   });
 });

@@ -31,7 +31,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
           <span>Premium</span>
         </div>}
       <div className={`${isNearPlace ? 'cities__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`}>
-        <Link to={`/offer/:${offer.id}`}>
+        <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place images" />
         </Link>
       </div>
@@ -55,7 +55,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{firstToUpperCase(offer.type)}</p>
       </div >

@@ -14,7 +14,6 @@ import { setComments, setIsLoading } from './reducers/comments';
 import { loadFavorites, changeFavorite } from './reducers/favorites';
 import { loadOffers, logoutOffers, loadOffersNearby } from './reducers/offers';
 import { changeOffers } from './reducers/offers';
-//      handleError(error); - самописная функция
 import { store } from '../store';
 
 export const clearErrorAction = createAsyncThunk(
@@ -26,19 +25,6 @@ export const clearErrorAction = createAsyncThunk(
     );
   },
 );
-// export const clearErrorAction = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch,
-//   state: State,
-//   extra: AxiosInstance
-// }>(
-//   'main/clearError',
-//   () => {
-//     setTimeout(
-//       (_arg, { dispatch, extra: api }) => dispatch(setError('')),
-//       TIMEOUT_SHOW_ERROR,
-//     );
-//   },
-// );
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,

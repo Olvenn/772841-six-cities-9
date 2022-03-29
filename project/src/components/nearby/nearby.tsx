@@ -2,7 +2,6 @@ import { NameSpace } from '../../const';
 import { useAppSelector } from '../../hooks/';
 import OfferCard from '../offer-card/offer-card';
 
-
 function Nearby(): JSX.Element {
   const offersNearby = useAppSelector((state) => state[NameSpace.offers].offersNearby);
   const isNearPlace = false;
