@@ -1,5 +1,6 @@
 import { NameSpace } from '../../const';
 import { useAppSelector } from '../../hooks';
+
 function ErrorMessage(): JSX.Element | null {
   const error = useAppSelector((state) => state[NameSpace.main].error);
 
@@ -8,8 +9,8 @@ function ErrorMessage(): JSX.Element | null {
       <div
         style={{
           position: 'fixed',
-          top: '50px',
-          right: '30px',
+          top: '150px',
+          right: '130px',
           padding: '10px',
           backgroundColor: '#d96666',
           color: 'white',

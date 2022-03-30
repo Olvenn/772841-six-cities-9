@@ -55,7 +55,7 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
         </div>
         <textarea className="reviews__textarea form__textarea" id="review" name="review"
           placeholder="Tell how was your stay, what you like and what can be improved" value={comment}
-          onChange={handleTextChange} minLength={MIN_LENGTH} maxLength={MAX_LENGTH}
+          onChange={handleTextChange} minLength={MIN_LENGTH} maxLength={MAX_LENGTH} aria-label="comment"
         >
         </textarea>
       </fieldset>

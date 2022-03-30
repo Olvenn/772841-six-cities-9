@@ -1,7 +1,6 @@
 import { comments, setComments } from './comments';
 import { makeFakeComments } from '../../mocks';
 
-
 const COMMENTS = 3;
 
 const fakeComments = makeFakeComments(COMMENTS);

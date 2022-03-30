@@ -6,13 +6,6 @@ export const MAX_COMMENTS = 10;
 export const MAX_LENGTH = 300;
 export const MIN_LENGTH = 50;
 
-// export const sortingLabels: { [index: string]: string } = {
-//   'Popular': 'Popular',
-//   'PriceToHigh': 'Price: low to high',
-//   'PriceToLow': 'Price: high to low',
-//   'Rated': 'Top rated first',
-// };
-
 export enum SortTypes {
   Default = 'Popular',
   PriceLowToHigh = 'PriceLowToHigh',

@@ -138,10 +138,5 @@ describe('Component: page-header', () => {
 
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
     expect(screen.getByText(/test/i)).toBeInTheDocument();
-    // const expectedStore = mockStore({
-    //   [NameSpace.user]: { authorizationStatus: AuthorizationStatus.NoAuth, email: '' },
-    // });
-    // userEvent.click(screen.getByText(/Sign out/i));
-
   });
 });

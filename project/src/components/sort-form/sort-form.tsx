@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { sortingLabels } from '../../const';
 import { SortTypes } from '../../const';
 import SortOption from '../sort-options/sort-options';
 

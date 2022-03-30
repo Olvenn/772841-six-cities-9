@@ -36,7 +36,6 @@ function LoginForm({ city }: LoginFormProps): JSX.Element {
       });
     }
   };
-  // dispatch(changeCity(city));
 
   return (
     <section className="login">
@@ -47,7 +46,7 @@ function LoginForm({ city }: LoginFormProps): JSX.Element {
           <input className="login__input form__input" value={login} onChange={handleLoginChange} type="email" name="email" placeholder="Email" data-testid="login" required />
         </div>
         <div className="login__input-wrapper form__input-wrapper">
-          <label className="visually-hidden"  htmlFor="password" >Password</label>
+          <label className="visually-hidden" htmlFor="password" >Password</label>
           <input className="login__input form__input" value={password} onChange={handlePasswordChange} type="password" name="password" placeholder="Password" data-testid="password" required />
         </div>
         <button className="login__submit form__submit button" type="submit">Sign in</button>

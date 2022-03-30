@@ -1,5 +1,13 @@
 import { SortTypes } from './const';
 import { Offer, Comment } from './types/types';
+import { setError } from './store/action';
+import { clearErrorAction } from './store/api-actions';
+import { store } from './store';
+
+export const dispatchError = (message: string) => {
+  store.dispatch(setError(message));
+  store.dispatch(clearErrorAction());
+};
 
 export const shuffle = (items: string[]) => items.sort(() => Math.random() - 0.5);
 
@@ -22,6 +30,5 @@ export const sortings = {
 };
 
 export const filterByCityName = (offers: Offer[], cityName: string) => [...offers].filter((offer: Offer) => offer.city.name === cityName);
-
 
 export const sortByDayAsc = (a: Comment, b: Comment) => ((Date.parse(b.date)) - (Date.parse(a.date)));
