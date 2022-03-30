@@ -1,13 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
 import { CITIES, NameSpace, SortTypes } from '../../const';
-import { filterByCityName, sortings, dispatchError } from '../../utils';
+import { filterByCityName, sortings } from '../../utils';
 import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
 import Map from '../map/map';
 import { getActiveOffer } from '../../store/reducers/offers';
-import MainPage from '../main-page/main-page';
 
 const ITEMS_COUNT = 5;
 

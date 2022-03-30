@@ -3,12 +3,9 @@ import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import FavoriteCard from './favorite-card';
-import { AppRoute } from '../../const';
 import { NameSpace, AuthorizationStatus } from '../../const';
 import { makeFakeOffers, FAVORITES } from '../../mocks';
 import { Provider } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
 const mockStore = configureMockStore();
 const fakeFavorites = makeFakeOffers(FAVORITES);
