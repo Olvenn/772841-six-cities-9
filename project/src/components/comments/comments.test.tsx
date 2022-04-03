@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Property);
 
 const store = mockStore({
-  [NameSpace.comments]: {
+  [NameSpace.Comments]: {
     comments: comments,
     isLoading: true,
   },

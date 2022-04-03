@@ -23,8 +23,8 @@ export const sortByPriceDesc = (a: Offer, b: Offer) => (b.price - a.price);
 export const sortByRating = (a: Offer, b: Offer) => (b.rating - a.rating);
 
 export const sortings = {
-  [SortTypes.PriceHighToLow]: (offers: Offer[]) => offers.sort(sortByPriceAsc),
-  [SortTypes.PriceLowToHigh]: (offers: Offer[]) => offers.sort(sortByPriceDesc),
+  [SortTypes.PriceHighToLow]: (offers: Offer[]) => offers.sort(sortByPriceDesc),
+  [SortTypes.PriceLowToHigh]: (offers: Offer[]) => offers.sort(sortByPriceAsc),
   [SortTypes.Rating]: (offers: Offer[]) => offers.sort(sortByRating),
   [SortTypes.Default]: (offers: Offer[]) => offers,
 };

@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/';
 import { NameSpace } from '../../const';
 
 function FavoritesPage(): JSX.Element {
-  const favorites = useAppSelector((state) => state[NameSpace.favorites].favorites);
+  const favorites = useAppSelector((state) => state[NameSpace.Favorites].favorites);
   const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (

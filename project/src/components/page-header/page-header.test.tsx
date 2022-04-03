@@ -15,7 +15,7 @@ const history = createMemoryHistory();
 describe('Component: page-header', () => {
   it('should render correctly AuthorizationStatus = Auth', () => {
     const store = mockStore({
-      [NameSpace.user]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test@test.ru' },
+      [NameSpace.User]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test@test.ru' },
     });
 
     render(
@@ -40,7 +40,7 @@ describe('Component: page-header', () => {
 
   it('should render correctly AuthorizationStatus != Auth', () => {
     const store = mockStore({
-      [NameSpace.user]: { authorizationStatus: AuthorizationStatus.NoAuth || AuthorizationStatus.Unknown, email: '' },
+      [NameSpace.User]: { authorizationStatus: AuthorizationStatus.NoAuth || AuthorizationStatus.Unknown, email: '' },
     });
 
     render(
@@ -64,7 +64,7 @@ describe('Component: page-header', () => {
 
   it('should redirect to root url when user clicked to link /login', () => {
     const store = mockStore({
-      [NameSpace.user]: { authorizationStatus: AuthorizationStatus.NoAuth, email: '' },
+      [NameSpace.User]: { authorizationStatus: AuthorizationStatus.NoAuth, email: '' },
     });
 
     render(
@@ -93,7 +93,7 @@ describe('Component: page-header', () => {
 
   it('should redirect to favorites url when user clicked to email', () => {
     const store = mockStore({
-      [NameSpace.user]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test' },
+      [NameSpace.User]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test' },
     });
     history.push('/');
     render(
@@ -121,7 +121,7 @@ describe('Component: page-header', () => {
 
   it('should redirect to favorites url when user clicked to sign out', () => {
     const store = mockStore({
-      [NameSpace.user]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test' },
+      [NameSpace.User]: { authorizationStatus: AuthorizationStatus.Auth, email: 'test' },
     });
     history.push('/');
     render(

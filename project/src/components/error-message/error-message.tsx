@@ -2,7 +2,7 @@ import { NameSpace } from '../../const';
 import { useAppSelector } from '../../hooks';
 
 function ErrorMessage(): JSX.Element | null {
-  const error = useAppSelector((state) => state[NameSpace.main].error);
+  const error = useAppSelector((state) => state[NameSpace.Main].error);
 
   if (error) {
     return (

@@ -15,11 +15,11 @@ const fakeFavorites = makeFakeOffers(ALLOFFERS);
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  [NameSpace.user]: {
+  [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
     email: 'test@test.ru',
   },
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     town: fakeCity,
     offers: fakeOffers,
     isLoading: true,
@@ -27,14 +27,14 @@ const store = mockStore({
     changedOffer: undefined,
     offersNearby: fakeOffersNearby,
   },
-  [NameSpace.favorites]: {
+  [NameSpace.Favorites]: {
     favorites: fakeFavorites,
   },
-  [NameSpace.comments]: {
+  [NameSpace.Comments]: {
     comments: [],
     isLoading: true,
   },
-  [NameSpace.main]: { error: '' },
+  [NameSpace.Main]: { error: '' },
 });
 const history = createMemoryHistory();
 

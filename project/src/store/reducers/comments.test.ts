@@ -11,6 +11,7 @@ describe('Reducer: COMMENTS', () => {
       .toEqual({
         comments: [],
         isLoading: true,
+        isSuccessfully: 0,
       });
   });
 
@@ -18,11 +19,13 @@ describe('Reducer: COMMENTS', () => {
     const state = {
       comments: [],
       isLoading: true,
+      isSuccessfully: 0,
     };
     expect(comments.reducer(state, setComments(fakeComments)))
       .toEqual({
         comments: fakeComments,
         isLoading: true,
+        isSuccessfully: 0,
       });
   });
 });

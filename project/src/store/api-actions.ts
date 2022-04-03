@@ -10,11 +10,12 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { CommentData } from '../types/comment-data';
 import { requireAuthorization, getEmail } from './reducers/user';
-import { setComments, setIsLoading } from './reducers/comments';
+import { setComments, setIsLoading, setSuccessfully } from './reducers/comments';
 import { loadFavorites, changeFavorite } from './reducers/favorites';
 import { loadOffers, logoutOffers, loadOffersNearby } from './reducers/offers';
 import { changeOffers } from './reducers/offers';
 import { store } from '../store';
+
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -36,7 +37,10 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     try {
       const { data } = await api.get<Offer[]>(APIRoute.Offers);
       dispatch(loadOffers(data));
+      dispatch(setError(''));
     } catch (error) {
+      dispatch(setError('Something was wrong. Try it more later.'));
+      dispatch(loadOffers([]));
       handleError(error);
     }
   },
@@ -71,7 +75,11 @@ export const commentAction = createAsyncThunk<void, CommentData, {
       const { data } = await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, { rating, comment });
       dispatch(setComments(data));
       dispatch(setIsLoading(false));
+      dispatch(setSuccessfully(1));
+      dispatch(setError(''));
     } catch (error) {
+      dispatch(setIsLoading(false));
+      dispatch(setError('Something was wrong. Try it more later.'));
       handleError(error);
     }
   },

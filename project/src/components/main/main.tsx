@@ -22,10 +22,24 @@ function Main({ cityActive }: MainProps): JSX.Element {
   }, []);
 
   const dispatch = useAppDispatch();
-  const activeOffer = useAppSelector((state) => state[NameSpace.offers].activeOffer);
+  // const memo = (originalFn) => {
+  //   const result = new Map();
 
-  const town = useAppSelector((state) => state[NameSpace.offers].town);
-  const rawOffers = useAppSelector((state) => state[NameSpace.offers].offers);
+  //   return (value) => {
+  //     if (!result.has(value)) {
+  //       result.set(
+  //         value,
+  //         originalFn(value)
+  //       );
+  //     }
+
+  //     return result.get(value);
+  //   };
+  // };
+  const activeOffer = useAppSelector((state) => state[NameSpace.Offers].activeOffer);
+
+  const town = useAppSelector((state) => state[NameSpace.Offers].town);
+  const rawOffers = useAppSelector((state) => state[NameSpace.Offers].offers);
   const cityOffers = filterByCityName(rawOffers, town);
   const sortedOffers = sortings[sortType](cityOffers);
 

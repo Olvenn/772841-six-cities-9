@@ -116,9 +116,9 @@ export enum HTTP_CODE {
 }
 
 export enum NameSpace {
-  offers = 'OFFERS',
-  favorites = 'FAVORITES',
-  comments = 'COMMENTS',
-  user = 'USER',
-  main = 'MAIN',
+  Offers = 'OFFERS',
+  Favorites = 'FAVORITES',
+  Comments = 'COMMENTS',
+  User = 'USER',
+  Main = 'MAIN',
 }

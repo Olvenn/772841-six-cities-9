@@ -14,7 +14,7 @@ const comments = makeFakeComments(COMMENTS);
 const comment = comments[0];
 
 const store = mockStore({
-  [NameSpace.comments]: {
+  [NameSpace.Comments]: {
     comments: comments,
     isLoading: true,
   },

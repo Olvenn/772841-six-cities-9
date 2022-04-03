@@ -7,7 +7,7 @@ const initialState: FAVORITES = {
 };
 
 export const favorites = createSlice({
-  name: NameSpace.favorites,
+  name: NameSpace.Favorites,
   initialState,
   reducers: {
     loadFavorites: (state, action) => {

@@ -11,11 +11,11 @@ const mockStore = configureMockStore();
 const fakeComments = makeFakeComments(COMMENTS);
 
 const store = mockStore({
-  [NameSpace.user]: {
+  [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
     email: 'test@test.ru',
   },
-  [NameSpace.comments]: {
+  [NameSpace.Comments]: {
     comments: fakeComments,
     isLoading: true,
   },

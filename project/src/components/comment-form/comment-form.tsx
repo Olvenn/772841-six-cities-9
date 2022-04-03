@@ -1,8 +1,10 @@
 import React, { useState, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { commentAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 import { ratings, MAX_LENGTH, MIN_LENGTH, NameSpace } from '../../const';
 import { CommentData } from '../../types/comment-data';
+import { setSuccessfully } from '../../store/reducers/comments';
 
 const MAX_RATING = 5;
 
@@ -14,7 +16,8 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const isLoading = useAppSelector((state) => state[NameSpace.comments].isLoading);
+  const isLoading = useAppSelector((state) => state[NameSpace.Comments].isLoading);
+  const isSuccessfully = useAppSelector((state) => state[NameSpace.Comments].isSuccessfully);
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(+evt.target.value);
@@ -30,16 +33,22 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
 
     if (rating !== null && comment !== null) {
       onSubmit({ offerId, rating, comment });
-      setRating(0);
-      setComment('');
+      dispatch(setSuccessfully(0));
     }
   };
+
+  useEffect(() => {
+    setRating(0);
+    setComment('');
+    dispatch(setSuccessfully(0));
+  }, [isSuccessfully]);
+
 
   return (
     <form className="reviews__form form" action="#" method="post"
       onSubmit={handleSubmit}
     >
-      <fieldset disabled={isLoading}>
+      <fieldset disabled={isLoading} style={{ border: 0 }}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           {ratings.map((title, index) => (

@@ -14,11 +14,11 @@ history.push(AppRoute.Root);
 const offers = makeFakeOffers(ALLOFFERS);
 
 const store = mockStore({
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     town: cities.Paris,
     offers: offers,
   },
-  [NameSpace.user]: {
+  [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
     email: 'test@test.ru',
   },

@@ -17,10 +17,10 @@ const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     offers: fakeOffers,
   },
-  [NameSpace.favorites]: {
+  [NameSpace.Favorites]: {
     favorites: fakeFavorites,
   },
 });

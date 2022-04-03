@@ -14,10 +14,10 @@ history.push(`/offer/:${fakeFavorites[0].id}`);
 
 describe('Component: FavoriteCard', () => {
   const store = mockStore({
-    [NameSpace.favorites]: {
+    [NameSpace.Favorites]: {
       favorites: fakeFavorites,
     },
-    [NameSpace.user]: {
+    [NameSpace.User]: {
       authorizationStatus: AuthorizationStatus.Auth,
       email: 'test@test.ru',
     },

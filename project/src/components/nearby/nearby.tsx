@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/';
 import OfferCard from '../offer-card/offer-card';
 
 function Nearby(): JSX.Element {
-  const offersNearby = useAppSelector((state) => state[NameSpace.offers].offersNearby);
+  const offersNearby = useAppSelector((state) => state[NameSpace.Offers].offersNearby);
   const isNearPlace = false;
   return (
     <section className="near-places places">

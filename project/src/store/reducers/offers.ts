@@ -12,7 +12,7 @@ const initialState: OffersProcess = {
 };
 
 export const offers = createSlice({
-  name: NameSpace.offers,
+  name: NameSpace.Offers,
   initialState,
   reducers: {
     changeCity: (state, action) => {

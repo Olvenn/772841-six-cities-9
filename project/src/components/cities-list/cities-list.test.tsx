@@ -13,7 +13,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     town: cities.Paris,
   },
 });

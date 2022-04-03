@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 import { loginAction } from '../../store/api-actions';
 import { useState } from 'react';
 import { AuthData } from '../../types/auth-data';
-import { changeCity } from '../../store/reducers/offers';
+import { changeCity, getActiveOffer } from '../../store/reducers/offers';
 
 export type LoginFormProps = {
   city: string;
@@ -25,11 +25,12 @@ function LoginForm({ city }: LoginFormProps): JSX.Element {
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
     dispatch(changeCity(city));
+    dispatch(getActiveOffer(-1));
   };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (login !== null && password !== null) {
+    if (login !== null && /[a-zA-Z]*/.test(password) && /[0-9]*/.test(password)) {
       onSubmit({
         login: login,
         password: password,

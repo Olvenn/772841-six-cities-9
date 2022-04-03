@@ -12,7 +12,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  [NameSpace.main]: { error: 'Not found' },
+  [NameSpace.Main]: { error: 'Not found' },
 });
 
 describe('Component: ErrorMessage', () => {

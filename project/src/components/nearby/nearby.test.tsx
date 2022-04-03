@@ -12,7 +12,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Property);
 
 const store = mockStore({
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     offersNearby: [],
   },
 });

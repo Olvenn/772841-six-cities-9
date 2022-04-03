@@ -11,11 +11,11 @@ import { NameSpace } from '../const';
 
 export const api = createAPI();
 export const reducer = combineReducers({
-  [NameSpace.main]: main,
-  [NameSpace.user]: user.reducer,
-  [NameSpace.offers]: offers.reducer,
-  [NameSpace.favorites]: favorites.reducer,
-  [NameSpace.comments]: comments.reducer,
+  [NameSpace.Main]: main,
+  [NameSpace.User]: user.reducer,
+  [NameSpace.Offers]: offers.reducer,
+  [NameSpace.Favorites]: favorites.reducer,
+  [NameSpace.Comments]: comments.reducer,
 });
 
 export const store = configureStore({

@@ -19,7 +19,7 @@ function OfferCard({ offer, isNearPlace, onOfferMouseOver }: OfferCardProps): JS
   };
 
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state[NameSpace.favorites].favorites);
+  const favorites = useAppSelector((state) => state[NameSpace.Favorites].favorites);
   const handleFavoriteClick = () => {
     dispatch(changeFavoriteAction(offer));
   };

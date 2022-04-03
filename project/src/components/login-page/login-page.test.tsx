@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
 const store = mockStore({
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     town: cities.Paris,
   },
 });

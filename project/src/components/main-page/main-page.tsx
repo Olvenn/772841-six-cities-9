@@ -9,8 +9,8 @@ import { changeCity } from '../../store/reducers/offers';
 import { NameSpace, cities } from '../../const';
 
 function MainPage(): JSX.Element {
-  const offers = useAppSelector((state) => state[NameSpace.offers].offers);
-  const town = useAppSelector((state) => state[NameSpace.offers].town);
+  const offers = useAppSelector((state) => state[NameSpace.Offers].offers);
+  const town = useAppSelector((state) => state[NameSpace.Offers].town);
   const dispatch = useAppDispatch();
 
   const handleCityClick: (item: string) => void = useCallback((city: string) => {

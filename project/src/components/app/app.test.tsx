@@ -16,11 +16,11 @@ const fakeFavorites = makeFakeOffers(ALLOFFERS);
 const mockStore = configureMockStore();
 
 const store = mockStore({
-  [NameSpace.user]: {
+  [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
     email: 'test@test.ru',
   },
-  [NameSpace.offers]: {
+  [NameSpace.Offers]: {
     town: fakeCity,
     offers: fakeOffers,
     isLoading: true,
@@ -28,14 +28,14 @@ const store = mockStore({
     changedOffer: undefined,
     offersNearby: fakeOffersNearby,
   },
-  [NameSpace.favorites]: {
+  [NameSpace.Favorites]: {
     favorites: fakeFavorites,
   },
-  [NameSpace.comments]: {
+  [NameSpace.Comments]: {
     comments: [],
     isLoading: true,
   },
-  [NameSpace.main]: { error: '' },
+  [NameSpace.Main]: { error: '' },
 });
 
 const history = createMemoryHistory();
@@ -67,14 +67,14 @@ describe('Application Routing', () => {
   it('should not render "Favorites" when user has  AuthorizationStatus.NoAuth"', () => {
     history.push(AppRoute.Favorites);
     const storeNew = mockStore({
-      [NameSpace.user]: {
+      [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.NoAuth,
         email: 'test@test.ru',
       },
-      [NameSpace.offers]: {
+      [NameSpace.Offers]: {
         isLoading: true,
       },
-      [NameSpace.favorites]: {
+      [NameSpace.Favorites]: {
         favorites: fakeFavorites,
       },
     });

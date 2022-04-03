@@ -23,8 +23,8 @@ const dispatchError = (message: string) => {
 
 function PropertyPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state[NameSpace.offers].offers);
-  const authorizationStatus = useAppSelector((state) => state[NameSpace.user].authorizationStatus);
+  const offers = useAppSelector((state) => state[NameSpace.Offers].offers);
+  const authorizationStatus = useAppSelector((state) => state[NameSpace.User].authorizationStatus);
 
   const { id } = useParams<{ id: string }>();
   if (!id) {

@@ -26,4 +26,5 @@ export type FAVORITES = {
 export type COMMENTS = {
   comments: Comment[],
   isLoading: boolean,
+  isSuccessfully: number,
 };

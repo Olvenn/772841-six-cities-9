@@ -11,7 +11,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../main';
 
 function App(): JSX.Element {
-  const isLoading = useAppSelector((state) => state[NameSpace.offers].isLoading);
+  const isLoading = useAppSelector((state) => state[NameSpace.Offers].isLoading);
   const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isLoading) {
@@ -36,7 +36,11 @@ function App(): JSX.Element {
       />
       <Route
         path={AppRoute.Login}
-        element={<LoginPage />}
+        element={
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <LoginPage />
+          </PrivateRoute>
+        }
       />
       <Route
         path={AppRoute.Property}

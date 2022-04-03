@@ -16,10 +16,10 @@ history.push(AppRoute.Favorites);
 describe('Component: Favorites', () => {
   it('should render correctly when there is at least one offer', () => {
     const store = mockStore({
-      [NameSpace.favorites]: {
+      [NameSpace.Favorites]: {
         favorites: fakeFavorites,
       },
-      [NameSpace.user]: {
+      [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
         email: 'test@test.ru',
       },
@@ -37,10 +37,10 @@ describe('Component: Favorites', () => {
 
   it('should render correctly when there are no offers', () => {
     const store = mockStore({
-      [NameSpace.favorites]: {
+      [NameSpace.Favorites]: {
         favorites: [],
       },
-      [NameSpace.user]: {
+      [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
         email: 'test@test.ru',
       },
