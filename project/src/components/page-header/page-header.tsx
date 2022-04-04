@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/';
 import { store } from '../../store';
 import { logoutAction } from '../../store/api-actions';
-import { AuthorizationStatus, NameSpace } from '../../const';
+import { AuthorizationStatus } from '../../const';
+import { getEmail, getAuthorizationStatus } from '../../store/reducers/selectors';
 import Logo from '../logo/logo';
 
 function PageHeader(): JSX.Element {
-  const email = useAppSelector((state) => state[NameSpace.User].email);
-  const authorizationStatus = useAppSelector((state) => state[NameSpace.User].authorizationStatus);
+  const email = useAppSelector(getEmail);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handleClick = () => {
     store.dispatch(logoutAction());
   };

@@ -14,6 +14,7 @@ const store = mockStore({});
 describe('Component: SortOption', () => {
   it('should render correctly Default', () => {
     const onSortClick = jest.fn();
+    const onSortChangeClick = jest.fn();
 
     render(
       <Provider store={store}>
@@ -22,7 +23,7 @@ describe('Component: SortOption', () => {
             {
               <Route
                 path={AppRoute.Root}
-                element={<SortOption onSortClick={onSortClick} key={'Default'} value={'Default' as SortTypes} label={'Popular'} optionActive={'Default'} />}
+                element={<SortOption onSortChangeClick={onSortChangeClick} onSortClick={onSortClick} key={'Default'} value={'Default' as SortTypes} label={'Popular'} optionActive={'Default'} />}
               />
             }
           </Routes>
@@ -35,6 +36,7 @@ describe('Component: SortOption', () => {
 
   it('should render correctly', () => {
     const onSortClick = jest.fn();
+    const onSortChangeClick = jest.fn();
 
     render(
       <Provider store={store}>
@@ -45,6 +47,7 @@ describe('Component: SortOption', () => {
                 path={AppRoute.Root}
                 element={
                   <SortOption
+                    onSortChangeClick={onSortChangeClick}
                     onSortClick={onSortClick}
                     key={'PriceHighToLow'}
                     value={'PriceHighToLow' as SortTypes}

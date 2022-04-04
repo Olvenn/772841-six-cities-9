@@ -2,9 +2,10 @@ import React, { useState, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { commentAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { ratings, MAX_LENGTH, MIN_LENGTH, NameSpace } from '../../const';
+import { ratings, MAX_LENGTH, MIN_LENGTH } from '../../const';
 import { CommentData } from '../../types/comment-data';
 import { setSuccessfully } from '../../store/reducers/comments';
+import {getIsLoadingComments, getSuccessfully} from '../../store/reducers/selectors';
 
 const MAX_RATING = 5;
 
@@ -16,8 +17,9 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const isLoading = useAppSelector((state) => state[NameSpace.Comments].isLoading);
-  const isSuccessfully = useAppSelector((state) => state[NameSpace.Comments].isSuccessfully);
+
+  const isLoading = useAppSelector(getIsLoadingComments);
+  const isSuccessfully = useAppSelector(getSuccessfully);
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(+evt.target.value);
@@ -38,11 +40,12 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
   };
 
   useEffect(() => {
-    setRating(0);
-    setComment('');
-    dispatch(setSuccessfully(0));
-  }, [isSuccessfully]);
-
+    if(isSuccessfully === 1) {
+      setRating(0);
+      setComment('');
+      dispatch(setSuccessfully(0));
+    }
+  }, [isSuccessfully, dispatch]);
 
   return (
     <form className="reviews__form form" action="#" method="post"

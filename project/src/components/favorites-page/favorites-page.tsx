@@ -3,10 +3,11 @@ import PageFooter from '../page-footer/page-footer';
 import FavoriteCard from '../favorite-card/favorite-card';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/';
-import { NameSpace } from '../../const';
+import {getFavorites} from '../../store/reducers/selectors';
 
 function FavoritesPage(): JSX.Element {
-  const favorites = useAppSelector((state) => state[NameSpace.Favorites].favorites);
+  const favorites = useAppSelector(getFavorites);
+
   const listCities = new Set(favorites.map((favorite) => favorite.city.name));
 
   return (

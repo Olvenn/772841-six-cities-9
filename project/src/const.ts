@@ -89,6 +89,7 @@ export enum AppRoute {
   Login = '/login',
   Property = '/offer/:id',
   Favorites = '/favorites',
+  NotFound = '/not-found',
 }
 
 export enum AuthorizationStatus {

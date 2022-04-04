@@ -33,6 +33,7 @@ function SortForm({ onSortClick, sortType }: SortFormProps): JSX.Element {
         {(Object.entries(sortingLabels)).map(([value, label]) => (
           <SortOption
             onSortClick={onSortClick}
+            onSortChangeClick={handleIsOpenClick}
             key={value}
             value={value as SortTypes}
             label={label}

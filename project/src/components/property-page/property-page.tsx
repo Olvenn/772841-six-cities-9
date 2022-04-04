@@ -4,32 +4,26 @@ import Comments from '../comments/comments';
 import Nearby from '../nearby/nearby';
 import { firstToUpperCase } from '../../utils';
 import { useParams } from 'react-router-dom';
-import Map from '../map/map';
+import Card from '../card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks/';
 import { changeFavoriteAction } from '../../store/api-actions';
 import { fetchNearbyAction, fetchCommentsAction } from '../../store/api-actions';
-import { AuthorizationStatus, NameSpace } from '../../const';
+import { AuthorizationStatus, AppRoute } from '../../const';
 import MainPage from '../main-page/main-page';
-import { store } from '../../store';
-import { setError } from '../../store/action';
-import { clearErrorAction } from '../../store/api-actions';
+import { redirectToRoute } from '../../store/action';
+import { getOffers, getAuthorizationStatus } from '../../store/reducers/selectors';
 
 const IMAGES_COUNT = 6;
 
-const dispatchError = (message: string) => {
-  store.dispatch(setError(message));
-  store.dispatch(clearErrorAction());
-};
-
 function PropertyPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state[NameSpace.Offers].offers);
-  const authorizationStatus = useAppSelector((state) => state[NameSpace.User].authorizationStatus);
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const { id } = useParams<{ id: string }>();
   if (!id) {
     if (offers.length > 0) {
-      dispatchError('Offer not found');
+      dispatch(redirectToRoute(AppRoute.NotFound));
     }
     return <MainPage />;
   }
@@ -37,7 +31,7 @@ function PropertyPage(): JSX.Element {
   const offer = offers.find((item) => item.id === +id);
   if (!offer) {
     if (offers.length > 0) {
-      dispatchError('Offer not found');
+      dispatch(redirectToRoute(AppRoute.NotFound));
     }
     return <MainPage />;
   }
@@ -135,7 +129,7 @@ function PropertyPage(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map activePoint={offer.city} offers={[]} offerActive={offer} mapPlace={'property'} />
+            <Card activePoint={offer.city} offers={[]} offerActive={offer} mapPlace={'property'} />
           </section>
         </section>
         <div className="container">

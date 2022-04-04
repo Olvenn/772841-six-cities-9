@@ -2,9 +2,10 @@ import { useAppSelector } from '../../hooks/';
 import CommentCard from '../comment-card/comment-card';
 import { MAX_COMMENTS } from '../../const';
 import { sortByDayAsc } from '../../utils';
+import {getComments} from '../../store/reducers/selectors';
 
 function Comments(): JSX.Element {
-  const comments = useAppSelector((state) => state.COMMENTS.comments);
+  const comments = useAppSelector(getComments);
 
   return (
     <div>

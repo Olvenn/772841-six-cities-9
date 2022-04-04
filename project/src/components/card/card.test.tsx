@@ -6,7 +6,7 @@ import HistoryRouter from '../history-route/history-route';
 import { NameSpace, AuthorizationStatus } from '../../const';
 import { random } from 'faker';
 import { makeFakeOffers, makeFakeCity, ALLOFFERS, NEARBY } from '../../mocks';
-import Map from './map';
+import Card from './card';
 
 const fakeOffers = makeFakeOffers(ALLOFFERS);
 const fakeOffersNearby = makeFakeOffers(NEARBY);
@@ -44,7 +44,7 @@ describe('Component: Map', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Map activePoint={fakeOffer.city} offers={fakeOffersNearby} offerActive={fakeOffers[0]} mapPlace={'property'} />
+          <Card activePoint={fakeOffer.city} offers={fakeOffersNearby} offerActive={fakeOffers[0]} mapPlace={'property'} />
         </HistoryRouter>
       </Provider>,
     );

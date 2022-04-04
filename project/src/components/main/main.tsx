@@ -1,46 +1,52 @@
 import { useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
-import { CITIES, NameSpace, SortTypes } from '../../const';
+import { CITIES, SortTypes } from '../../const';
 import { filterByCityName, sortings } from '../../utils';
 import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import SortForm from '../sort-form/sort-form';
-import Map from '../map/map';
+import Card from '../card/card';
 import { getActiveOffer } from '../../store/reducers/offers';
-
-const ITEMS_COUNT = 5;
+import { getOffers, getCity, getActiveOfferSelector } from '../../store/reducers/selectors';
 
 type MainProps = {
   cityActive: string;
 }
 
 function Main({ cityActive }: MainProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [sortType, setSortType] = useState(SortTypes.Default);
 
   const handleSortClick: (sort: SortTypes) => void = useCallback((sort) => {
     setSortType(sort);
   }, []);
 
-  const dispatch = useAppDispatch();
-  // const memo = (originalFn) => {
-  //   const result = new Map();
+  const activeOffer = useAppSelector(getActiveOfferSelector);
+  const town = useAppSelector(getCity);
+  const rawOffers = useAppSelector(getOffers);
 
-  //   return (value) => {
-  //     if (!result.has(value)) {
-  //       result.set(
-  //         value,
-  //         originalFn(value)
-  //       );
-  //     }
+  const increment = (value : string) => {
+    const cityOffers = filterByCityName(rawOffers, value);
+    return cityOffers;
+  };
 
-  //     return result.get(value);
-  //   };
-  // };
-  const activeOffer = useAppSelector((state) => state[NameSpace.Offers].activeOffer);
+  const memo = (originalFn:  (value: string) => Offer[]) => {
+    const result = new Map();
 
-  const town = useAppSelector((state) => state[NameSpace.Offers].town);
-  const rawOffers = useAppSelector((state) => state[NameSpace.Offers].offers);
-  const cityOffers = filterByCityName(rawOffers, town);
+    return (value: string) => {
+      if (!result.has(value)) {
+        result.set(
+          value,
+          originalFn(value),
+        );
+      }
+
+      return result.get(value);
+    };
+  };
+
+  const memorizedIncrement = memo(increment);
+  const cityOffers = memorizedIncrement(town);
   const sortedOffers = sortings[sortType](cityOffers);
 
   const handleOfferMouseOver: (item: Offer) => void = useCallback((offer) => {
@@ -62,13 +68,13 @@ function Main({ cityActive }: MainProps): JSX.Element {
           <b className="places__found"> {sortedOffers.length} places to stay in {town}</b>
           <SortForm onSortClick={handleSortClick} sortType={sortType} />
           <div className="cities__places-list places__list tabs__content">
-            {sortedOffers.slice(0, ITEMS_COUNT).map((offer) =>
+            {sortedOffers.map((offer) =>
               (<OfferCard offer={offer} isNearPlace={isNearPlace} onOfferMouseOver={handleOfferMouseOver} key={offer.id} />))}
           </div>
         </section>
         <section className="visually-hidden cities__map map"></section>
         <div className="cities__right-section">
-          <Map activePoint={activePoint} offers={sortedOffers} offerActive={activeOffer} mapPlace={'main'} />
+          <Card activePoint={activePoint} offers={sortedOffers} offerActive={activeOffer} mapPlace={'main'} />
         </div>
       </div >
     </div >

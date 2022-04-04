@@ -1,17 +1,17 @@
-import { NameSpace } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getError } from '../../store/reducers/selectors';
 
 function ErrorMessage(): JSX.Element | null {
-  const error = useAppSelector((state) => state[NameSpace.Main].error);
+  const error = useAppSelector(getError);
 
   if (error) {
     return (
       <div
         style={{
           position: 'fixed',
-          top: '150px',
+          top: '200px',
           right: '130px',
-          padding: '10px',
+          padding: '20px',
           backgroundColor: '#d96666',
           color: 'white',
           borderRadius: '5px',

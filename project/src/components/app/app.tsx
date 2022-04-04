@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { AppRoute, NameSpace } from '../../const';
+import { AppRoute } from '../../const';
 import MainPage from '../main-page/main-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import LoginPage from '../login-page/login-page';
@@ -9,10 +9,11 @@ import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../main';
+import {getIsLoadingOffers, getAuthorizationStatus} from '../../store/reducers/selectors';
 
 function App(): JSX.Element {
-  const isLoading = useAppSelector((state) => state[NameSpace.Offers].isLoading);
-  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
+  const isLoading = useAppSelector(getIsLoadingOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isLoading) {
     return (
@@ -37,13 +38,10 @@ function App(): JSX.Element {
       <Route
         path={AppRoute.Login}
         element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
-            <LoginPage />
-          </PrivateRoute>
+          <LoginPage />
         }
       />
-      <Route
-        path={AppRoute.Property}
+      <Route path={AppRoute.Property}
         element={<PropertyPage />}
       />
       <Route

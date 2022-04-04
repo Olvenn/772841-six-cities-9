@@ -22,7 +22,7 @@ function FavoriteCard({ oneFavoriteOffer }: OfferCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link data-testid="favorite" to={`/offer/:${id}`}>
+        <Link data-testid="favorite" to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place images" />
         </Link>
       </div>
@@ -46,7 +46,7 @@ function FavoriteCard({ oneFavoriteOffer }: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{firstToUpperCase(type)}</p>
       </div>

@@ -76,10 +76,10 @@ export const commentAction = createAsyncThunk<void, CommentData, {
       dispatch(setComments(data));
       dispatch(setIsLoading(false));
       dispatch(setSuccessfully(1));
-      dispatch(setError(''));
     } catch (error) {
       dispatch(setIsLoading(false));
       dispatch(setError('Something was wrong. Try it more later.'));
+      dispatch(clearErrorAction());
       handleError(error);
     }
   },

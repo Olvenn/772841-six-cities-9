@@ -6,11 +6,12 @@ import MainEmpty from '../main-empty/main-empty';
 import CitiesList from '../cities-list/cities-list';
 import { getActiveOffer } from '../../store/reducers/offers';
 import { changeCity } from '../../store/reducers/offers';
-import { NameSpace, cities } from '../../const';
+import { cities } from '../../const';
+import {getOffers, getCity} from '../../store/reducers/selectors';
 
 function MainPage(): JSX.Element {
-  const offers = useAppSelector((state) => state[NameSpace.Offers].offers);
-  const town = useAppSelector((state) => state[NameSpace.Offers].town);
+  const town = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
   const dispatch = useAppDispatch();
 
   const handleCityClick: (item: string) => void = useCallback((city: string) => {

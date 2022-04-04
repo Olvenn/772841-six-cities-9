@@ -9,6 +9,11 @@ export type LoginFormProps = {
   city: string;
 }
 
+const PASSWORD_NUMBERS_REGEXP = /[0-9]+/;
+const PASSWORD_LETTERS_REGEXP = /[a-zA-Z]+/;
+const EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+
 function LoginForm({ city }: LoginFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [login, setLogin] = useState('');
@@ -30,7 +35,7 @@ function LoginForm({ city }: LoginFormProps): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (login !== null && /[a-zA-Z]*/.test(password) && /[0-9]*/.test(password)) {
+    if (EMAIL_REGEXP.test(login) && PASSWORD_LETTERS_REGEXP.test(password) && PASSWORD_NUMBERS_REGEXP.test(password)) {
       onSubmit({
         login: login,
         password: password,

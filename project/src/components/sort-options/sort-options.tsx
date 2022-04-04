@@ -5,11 +5,13 @@ type SortOptionProps = {
   value: SortTypes;
   label: string;
   onSortClick: (item: SortTypes) => void;
+  onSortChangeClick: () => void;
 }
 
-function SortOption({label, optionActive, value, onSortClick }: SortOptionProps): JSX.Element {
+function SortOption({label, optionActive, value, onSortClick, onSortChangeClick }: SortOptionProps): JSX.Element {
   const handleClick = () => {
     onSortClick(value);
+    onSortChangeClick();
   };
 
   return (

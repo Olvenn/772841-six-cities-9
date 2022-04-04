@@ -9,21 +9,10 @@ type PrivateRouteProps = RouteProps & {
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   const { authorizationStatus, children } = props;
-  if (children.type.name === 'FavoritesPage') {
-    return (
-      authorizationStatus === AuthorizationStatus.Auth
-        ? children
-        : <Navigate to={AppRoute.Login} />
-    );
-  }
-  if (children.type.name === 'LoginPage') {
-    return (
-      authorizationStatus === AuthorizationStatus.NoAuth
-        ? children
-        : <Navigate to={AppRoute.Root} />
-    );
-  }
-  return <Navigate to='*' />;
-
+  return (
+    authorizationStatus === AuthorizationStatus.Auth
+      ? children
+      : <Navigate to={AppRoute.Login} />
+  );
 }
 export default PrivateRoute;
