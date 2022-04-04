@@ -58,6 +58,7 @@ export const fetchCommentsAction = createAsyncThunk<void, number, {
       dispatch(setComments(data));
       dispatch(setIsLoading(false));
     } catch (error) {
+      dispatch(setIsLoading(false));
       handleError(error);
     }
   },
