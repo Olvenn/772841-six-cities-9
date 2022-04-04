@@ -3,10 +3,10 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { City, Offer } from '../../types/types';
-import useMap from './use-map';
+import useMap from './use-card';
 import { URL_MARKER, URL_MARKER_ACTIVE } from '../../const';
 import { useAppSelector } from '../../hooks';
-import {getOffersNearby} from '../../store/reducers/selectors';
+import { getOffersNearby } from '../../store/reducers/selectors';
 
 export type MapProps = {
   activePoint: City;
